@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments :: page_head('Employee Management', 'none')">
+</head>
+<body>
+	<div class="container-fluid container">
+		<div class="content">
+			<div th:replace="navigation :: menu"></div>
+			<div>
+				<h2>Manage Employees</h2>
+				<a th:href="@{/employees/new}" class="fas fa-user-plus fa-2x icon-dark mx-2"></a>
+				&nbsp;|&nbsp;
+				<a th:href="@{/employees/export/csv}" class="fas fa-file-csv fa-2x icon-dark mx-2"></a>
+				&nbsp;|&nbsp;
+				<a th:href="@{/employees/export/excel}" class="fas fa-file-excel fa-2x icon-dark mx-2"></a>
+				&nbsp;|&nbsp;
+				<a th:href="@{/employees/export/pdf}" class="fas fa-file-pdf fa-2x icon-dark mx-2"></a>
+			</div>
+			<div>
+				<form th:action="@{/employees/page/1}" class="form-inline m-3">
+					<input type="hidden" name="sortField" th:value="${sortField}" />
+					<input type="hidden" name="sortDir" th:value="${sortDir}" />
+
+				    <div style="display: flex;">
+					     <h5>Search Employees</h5>
+					     &nbsp;
+					     <input type="search" name="keyword" th:value="${keyword}" style="width: 300px" class="form-control mb-2" id="searchInp" required />
+					     &nbsp;
+						 <button type="submit" class="btn btn-primary mb-2" >
+							 <i class="fas fa-search"></i>
+						 </button>
+						&nbsp;
+						<button type="button" class="btn btn-secondary mb-2" onclick="clearFilter()">
+							<i class="fas fa-eraser"></i>
+						</button>
+				    </div>
+	
+				</form>
+				
+ 				<div th:if="${message != null}" class="alert alert-success text-center">
+					[[${message}]]
+				</div>
+			</div>
+			
+			<div class="full-details">
+				<table class="table table-bordered table-striped table-hover table-responsive-xl">
+					<thead class="thead-dark">
+						<tr>
+							<th>
+								<a class="page-link" th:href="@{'/employees/page/' + ${currentPage} + '?sortField=id&sortDir=' + ${sortField != 'id' ? sortDir : reverseSortDir} + '&keyword=' + ${keyword != null ? keyword : ''}}">Id</a>
+							</th>
+							<th>Photos</th>
+							<th>
+								<a class="page-link" th:href="@{'/employees/page/' + ${currentPage} + '?sortField=firstName&sortDir=' + ${sortField != 'firstName' ? sortDir : reverseSortDir} + '&keyword=' + ${keyword != null ? keyword : ''}}">First Name</a>
+							</th>
+							<th>
+								<a class="page-link" th:href="@{'/employees/page/' + ${currentPage} + '?sortField=lastName&sortDir=' + ${sortField != 'lastName' ? sortDir : reverseSortDir} + '&keyword=' + ${keyword != null ? keyword : ''}}">Last Name</a>
+							</th>
+							<th>Gender</th>
+							<th>Birth Date</th>
+							<th>Hiring Date</th>
+							<th>Buddy</th>
+							<th>Department</th>
+							<th>Action</th>
+						</tr>
+					</thead>
+					
+					<tbody>
+						<tr th:each="employee : ${employees}">
+							<td>[[${employee.id}]]</td>
+							<td>
+								<img alt="Employee Image" th:src="@{${employee.photosImagePath}}" style="width: 100px; height: 100px">
+							</td>
+							<td>[[${employee.firstName}]]</td>
+							<td>[[${employee.lastName}]]</td>
+							<td>[[${employee.gender}]]</td>
+							<td>[[${employee.birthDate}]]</td>
+							<td>[[${employee.hiringDate}]]</td>
+							<td th:if="${employee.buddy != null}">[[${employee.buddy.firstName}]] [[${employee.buddy.lastName}]]</td>
+							<td th:if="${employee.buddy == null}">He is the boss</td>
+							<td>[[${employee.department.name}]]</td>
+							<td>
+								<div th:replace="fragments :: edit('employee', '/employees/edit/' + ${employee.id})" />
+								&nbsp;
+								<div th:replace="fragments :: delete('employee', ${employee.id}, '/employees/delete/' + ${employee.id})" />
+								&nbsp;
+								<a
+									th:href="@{'/employees/' + ${employee.id} + '/notes'}"
+									title="Note about this employee">
+									<i class="fa-regular fa-note-sticky fa-2x"></i>
+								</a>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			
+	 		<!-- <div th:replace="fragments :: pagination('/employees', 'employees')"></div> -->
+	 		
+	 		<nav aria-label="Page navigation example">
+	 		  <div class="text-center m-1" th:if="${totalElements > 0}">
+				<span> Showing employees from # [[${startCount}]] to # [[${endCount}]] of total [[${totalElements}]] employees</span>
+			  </div>
+				
+			  <div class="text-center m-1" th:unless="${totalElements > 0}">
+					<span>No employees found</span>
+			  </div>
+			  <ul class="pagination justify-content-center">
+			    <li th:class=" ${currentPage > 1 ? 'page-item' : 'page-item disabled'}">
+			      <a class="page-link" th:href="@{'/employees/page/' + ${currentPage - 1} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir} + '&keyword=' + ${keyword != null ? keyword : ''}}">Previous</a>
+			    </li>
+			    
+			    <th:block th:each="index: ${#numbers.sequence(1, totalPages)}">
+			    	<li th:if="${index} > 0" class="page-item">
+			    		<a class="page-link" th:href="@{'/employees/page/' + ${index} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir} + '&keyword=' + ${keyword != null ? keyword : ''}}">[[${index}]]</a>
+			    	</li>
+			    </th:block>
+			    <li th:class="${currentPage < totalPages ? 'page-item' : 'page-item disabled'}">
+			      <a class="page-link" th:href="@{'/employees/page/' + ${currentPage + 1} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir} + '&keyword=' + ${keyword != null ? keyword : ''}}">Next</a>
+			    </li>
+			  </ul>
+			</nav>
+
+			<div class="modal fade text-center" id="confirmModal">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h4 class="modal-title" id="modalTitle">Delete Confirmation</h4>
+							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+						</div>
+						
+						<div class="modal-body">
+							<span id="confirmText"></span>
+						</div>
+						
+						<div class="modal-footer">
+							<a type="button" class="btn btn-success" href="" id="yesButton">Yes</a>
+							<button type="button" class="btn btn-danger" data-bs-dismiss="modal">No</button>
+						</div>
+					</div>
+				</div>
+				
+			</div>
+		
+			<div th:replace="fragments :: footer"></div>
+		</div>
+	</div>
+	
+	<script type="text/javascript">
+		moduleURL = "[[@{/employees}]]";
+		$(document).ready(function() {
+			$(".link-delete").on("click", function(e) {
+				e.preventDefault();
+				showDeleteConfirmModal($(this), "employee");
+				console.log("Showing Modal");
+			})
+		})
+		
+		function showDeleteConfirmModal(link, entityName){
+			entityId = link.attr("entityId");
+			
+ 			$("#yesButton").attr("href", link.attr("href"));
+			
+			$("#confirmText").text("Are you sure you want to delete this " + entityName + " with ID " + entityId + " ?");
+			
+			$("#confirmModal").modal('show');
+		}
+		
+		function clearFilter(){
+			window.location = moduleURL;
+		}
+	</script>
+	
+</body>
+</html>
