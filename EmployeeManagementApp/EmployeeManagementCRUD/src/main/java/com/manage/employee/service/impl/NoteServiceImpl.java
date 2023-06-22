@@ -10,13 +10,12 @@ import java.util.stream.Collectors;
 import com.manage.employee.dto.NoteDto;
 import com.manage.employee.dto.NoteFormDto;
 import com.manage.employee.dto.mapper.note.NoteFormDtoMapper;
-import com.manage.employee.entity.enums.TimeSheetStatus;
-import com.manage.employee.exception.NoteNotFoundException;
-import org.aspectj.weaver.ast.Not;
+import com.manage.employeemanagementmodel.entity.enums.TimeSheetStatus;
+import com.manage.employeemanagementmodel.exception.NoteNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.manage.employee.entity.Note;
+import com.manage.employeemanagementmodel.entity.Note;
 import com.manage.employee.repository.NoteRepository;
 import com.manage.employee.service.NoteService;
 @Service

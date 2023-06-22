@@ -4,8 +4,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.time.LocalDate;
 
-import com.manage.employee.entity.Account;
-import com.manage.employee.entity.JobDepartment;
+import com.manage.employeemanagementmodel.entity.Account;
+import com.manage.employeemanagementmodel.entity.JobDepartment;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
@@ -18,9 +18,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.test.annotation.Rollback;
 
-import com.manage.employee.entity.Department;
-import com.manage.employee.entity.Employee;
-import com.manage.employee.entity.enums.Gender;
+import com.manage.employeemanagementmodel.entity.Department;
+import com.manage.employeemanagementmodel.entity.Employee;
+import com.manage.employeemanagementmodel.entity.enums.Gender;
 import com.manage.employee.repository.EmployeeRepository;
 
 @DataJpaTest

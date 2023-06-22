@@ -12,11 +12,11 @@ import org.springframework.transaction.annotation.Transactional;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 
-import com.manage.employee.entity.Department;
-import com.manage.employee.entity.Employee;
-import com.manage.employee.entity.MailConfig;
-import com.manage.employee.entity.enums.Gender;
-import com.manage.employee.entity.enums.MailType;
+import com.manage.employeemanagementmodel.entity.Department;
+import com.manage.employeemanagementmodel.entity.Employee;
+import com.manage.employeemanagementmodel.entity.MailConfig;
+import com.manage.employeemanagementmodel.entity.enums.Gender;
+import com.manage.employeemanagementmodel.entity.enums.MailType;
 import com.manage.employee.repository.DepartmentRepository;
 import com.manage.employee.repository.EmployeeRepository;
 import com.manage.employee.repository.MailConfigRepository;

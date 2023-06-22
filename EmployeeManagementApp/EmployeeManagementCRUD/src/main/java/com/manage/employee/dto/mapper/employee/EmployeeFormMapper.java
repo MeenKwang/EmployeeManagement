@@ -4,7 +4,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
 import com.manage.employee.dto.EmployeeFormDto;
-import com.manage.employee.entity.Employee;
+import com.manage.employeemanagementmodel.entity.Employee;
 
 @Mapper(componentModel = "spring")
 public interface EmployeeFormMapper {

@@ -2,7 +2,7 @@ package com.manage.project;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import com.manage.employee.entity.Project;
+import com.manage.employeemanagementmodel.entity.Project;
 import com.manage.employee.repository.ProjectRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

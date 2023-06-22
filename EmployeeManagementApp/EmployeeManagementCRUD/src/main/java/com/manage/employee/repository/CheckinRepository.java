@@ -1,6 +1,6 @@
 package com.manage.employee.repository;
 
-import com.manage.employee.entity.CheckIn;
+import com.manage.employeemanagementmodel.entity.CheckIn;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

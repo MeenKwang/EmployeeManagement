@@ -3,8 +3,8 @@ package com.manage.employeemanagementmodel.entity;
 import java.io.Serializable;
 import java.time.LocalDate;
 
-import com.manage.employee.entity.enums.TimeSheetStatus;
-import com.manage.employee.entity.enums.WorkingType;
+import com.manage.employeemanagementmodel.entity.enums.TimeSheetStatus;
+import com.manage.employeemanagementmodel.entity.enums.WorkingType;
 import jakarta.persistence.*;
 
 @Entity

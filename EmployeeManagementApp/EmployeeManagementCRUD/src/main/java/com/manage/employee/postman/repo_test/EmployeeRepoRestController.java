@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.manage.employee.entity.Employee;
+import com.manage.employeemanagementmodel.entity.Employee;
 import com.manage.employee.repository.EmployeeRepository;
 
 @RestController

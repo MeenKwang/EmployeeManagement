@@ -1,6 +1,6 @@
 package com.manage.employee.service;
 
-import com.manage.employee.entity.Employee;
+import com.manage.employeemanagementmodel.entity.Employee;
 
 import jakarta.mail.MessagingException;
 

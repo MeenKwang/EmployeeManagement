@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.manage.employee.entity.JobDetails;
+import com.manage.employeemanagementmodel.entity.JobDetails;
 import com.manage.employee.repository.JobDetailsRepository;
 import com.manage.employee.service.JobDetailsService;
 @Service

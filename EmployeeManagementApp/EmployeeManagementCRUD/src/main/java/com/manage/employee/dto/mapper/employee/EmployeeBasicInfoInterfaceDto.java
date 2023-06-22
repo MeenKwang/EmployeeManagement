@@ -1,6 +1,6 @@
 package com.manage.employee.dto.mapper.employee;
 
-import com.manage.employee.entity.enums.Gender;
+import com.manage.employeemanagementmodel.entity.enums.Gender;
 import org.springframework.beans.factory.annotation.Value;
 
 import java.time.LocalDate;

@@ -5,8 +5,8 @@ import java.util.List;
 import org.springframework.data.domain.Page;
 
 import com.manage.employee.dto.EmployeeFormDto;
-import com.manage.employee.entity.Employee;
-import com.manage.employee.exception.EmployeeNotFoundException;
+import com.manage.employeemanagementmodel.entity.Employee;
+import com.manage.employeemanagementmodel.exception.EmployeeNotFoundException;
 
 public interface EmployeeService {
 	

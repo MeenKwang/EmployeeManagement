@@ -1,7 +1,7 @@
 package com.manage.employee.dto;
 
-import com.manage.employee.entity.enums.TimeSheetStatus;
-import com.manage.employee.entity.enums.WorkingType;
+import com.manage.employeemanagementmodel.entity.enums.TimeSheetStatus;
+import com.manage.employeemanagementmodel.entity.enums.WorkingType;
 
 import java.time.LocalDate;
 

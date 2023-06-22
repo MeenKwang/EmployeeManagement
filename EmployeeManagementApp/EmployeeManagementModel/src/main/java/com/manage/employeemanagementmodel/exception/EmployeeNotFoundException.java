@@ -1,4 +1,4 @@
-package com.manage.employee.exception;
+package com.manage.employeemanagementmodel.exception;
 
 public class EmployeeNotFoundException extends Exception {
 	

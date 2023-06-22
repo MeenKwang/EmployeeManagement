@@ -2,8 +2,8 @@ package com.manage.checkin;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import com.manage.employee.entity.CheckIn;
-import com.manage.employee.entity.Employee;
+import com.manage.employeemanagementmodel.entity.CheckIn;
+import com.manage.employeemanagementmodel.entity.Employee;
 import com.manage.employee.repository.CheckinRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

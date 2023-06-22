@@ -15,8 +15,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.manage.employee.dto.EmployeeFormDto;
 import com.manage.employee.dto.mapper.employee.EmployeeFormMapper;
-import com.manage.employee.entity.Employee;
-import com.manage.employee.exception.EmployeeNotFoundException;
+import com.manage.employeemanagementmodel.entity.Employee;
+import com.manage.employeemanagementmodel.exception.EmployeeNotFoundException;
 import com.manage.employee.repository.EmployeeRepository;
 import com.manage.employee.service.EmployeeService;
 @Service

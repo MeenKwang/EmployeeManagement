@@ -1,6 +1,6 @@
 package com.manage.employee.dto;
 
-import com.manage.employee.entity.enums.Gender;
+import com.manage.employeemanagementmodel.entity.enums.Gender;
 
 import java.time.LocalDate;
 

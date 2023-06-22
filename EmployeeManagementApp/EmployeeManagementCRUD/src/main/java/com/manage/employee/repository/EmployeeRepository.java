@@ -14,7 +14,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import com.manage.employee.dto.EmployeeProfileDto;
-import com.manage.employee.entity.Employee;
+import com.manage.employeemanagementmodel.entity.Employee;
 
 public interface EmployeeRepository extends JpaRepository<Employee, Integer> {
 	List<Employee> findAll();

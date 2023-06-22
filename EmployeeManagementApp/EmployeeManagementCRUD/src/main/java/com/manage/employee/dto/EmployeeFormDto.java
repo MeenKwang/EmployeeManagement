@@ -3,7 +3,7 @@ package com.manage.employee.dto;
 import java.io.Serializable;
 import java.time.LocalDate;
 
-import com.manage.employee.entity.enums.Gender;
+import com.manage.employeemanagementmodel.entity.enums.Gender;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

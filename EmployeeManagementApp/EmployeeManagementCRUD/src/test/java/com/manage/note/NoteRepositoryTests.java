@@ -2,11 +2,11 @@ package com.manage.note;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import com.manage.employee.entity.Employee;
-import com.manage.employee.entity.Note;
-import com.manage.employee.entity.Task;
-import com.manage.employee.entity.enums.TimeSheetStatus;
-import com.manage.employee.entity.enums.WorkingType;
+import com.manage.employeemanagementmodel.entity.Employee;
+import com.manage.employeemanagementmodel.entity.Note;
+import com.manage.employeemanagementmodel.entity.Task;
+import com.manage.employeemanagementmodel.entity.enums.TimeSheetStatus;
+import com.manage.employeemanagementmodel.entity.enums.WorkingType;
 import com.manage.employee.repository.NoteRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

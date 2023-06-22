@@ -1,7 +1,7 @@
 package com.manage.employee.dto.mapper.note;
 
 import com.manage.employee.dto.NoteFormDto;
-import com.manage.employee.entity.Note;
+import com.manage.employeemanagementmodel.entity.Note;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 

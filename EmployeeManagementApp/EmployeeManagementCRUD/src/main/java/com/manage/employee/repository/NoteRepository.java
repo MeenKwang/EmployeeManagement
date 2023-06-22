@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-import com.manage.employee.entity.Note;
+import com.manage.employeemanagementmodel.entity.Note;
 
 public interface NoteRepository extends JpaRepository<Note, Integer>{
 	

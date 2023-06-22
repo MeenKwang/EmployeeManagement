@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.manage.employee.entity.Department;
+import com.manage.employeemanagementmodel.entity.Department;
 import com.manage.employee.repository.DepartmentRepository;
 import com.manage.employee.service.DepartmentService;
 @Service

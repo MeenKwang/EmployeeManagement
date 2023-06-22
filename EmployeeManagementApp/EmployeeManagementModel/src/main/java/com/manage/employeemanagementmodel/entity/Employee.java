@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.manage.employee.entity.enums.Gender;
+import com.manage.employeemanagementmodel.entity.enums.Gender;
 
 import jakarta.persistence.*;
 

@@ -18,10 +18,10 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.manage.employee.dto.EmployeeFormDto;
 import com.manage.employee.dto.mapper.employee.EmployeeFormMapper;
-import com.manage.employee.entity.Employee;
-import com.manage.employee.entity.Note;
-import com.manage.employee.entity.enums.Gender;
-import com.manage.employee.exception.EmployeeNotFoundException;
+import com.manage.employeemanagementmodel.entity.Employee;
+import com.manage.employeemanagementmodel.entity.Note;
+import com.manage.employeemanagementmodel.entity.enums.Gender;
+import com.manage.employeemanagementmodel.exception.EmployeeNotFoundException;
 import com.manage.employee.service.DepartmentService;
 import com.manage.employee.service.EmailService;
 import com.manage.employee.service.EmployeeService;

@@ -1,8 +1,8 @@
 package com.manage.employee;
 
 import com.manage.employee.controller.EmployeeController;
-import com.manage.employee.entity.Employee;
-import com.manage.employee.entity.enums.Gender;
+import com.manage.employeemanagementmodel.entity.Employee;
+import com.manage.employeemanagementmodel.entity.enums.Gender;
 import com.manage.employee.service.EmployeeService;
 import org.hamcrest.CoreMatchers;
 import org.junit.jupiter.api.Test;

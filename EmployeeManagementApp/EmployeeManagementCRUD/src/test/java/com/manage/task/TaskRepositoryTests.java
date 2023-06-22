@@ -2,8 +2,8 @@ package com.manage.task;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import com.manage.employee.entity.Project;
-import com.manage.employee.entity.Task;
+import com.manage.employeemanagementmodel.entity.Project;
+import com.manage.employeemanagementmodel.entity.Task;
 import com.manage.employee.repository.TaskRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

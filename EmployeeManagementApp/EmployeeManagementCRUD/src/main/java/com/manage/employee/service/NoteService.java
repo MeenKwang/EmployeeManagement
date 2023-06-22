@@ -5,8 +5,8 @@ import java.util.List;
 
 import com.manage.employee.dto.NoteDto;
 import com.manage.employee.dto.NoteFormDto;
-import com.manage.employee.entity.Note;
-import com.manage.employee.exception.NoteNotFoundException;
+import com.manage.employeemanagementmodel.entity.Note;
+import com.manage.employeemanagementmodel.exception.NoteNotFoundException;
 
 public interface NoteService {
 	List<Note> listAllNoteByEmployee(Integer employeeId);

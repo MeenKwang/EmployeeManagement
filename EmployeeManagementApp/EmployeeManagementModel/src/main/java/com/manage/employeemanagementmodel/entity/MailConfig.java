@@ -1,6 +1,6 @@
 package com.manage.employeemanagementmodel.entity;
 
-import com.manage.employee.entity.enums.MailType;
+import com.manage.employeemanagementmodel.entity.enums.MailType;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

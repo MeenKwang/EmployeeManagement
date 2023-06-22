@@ -1,7 +1,7 @@
 package com.manage.employeemanagementmodel.entity;
 
-import com.manage.employee.entity.enums.AbsenceType;
-import com.manage.employee.entity.enums.AbsenceTypeOff;
+import com.manage.employeemanagementmodel.entity.enums.AbsenceType;
+import com.manage.employeemanagementmodel.entity.enums.AbsenceTypeOff;
 import jakarta.persistence.*;
 
 @Entity

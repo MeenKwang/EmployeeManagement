@@ -23,10 +23,10 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import com.manage.employee.dto.EmployeeFormDto;
 import com.manage.employee.dto.mapper.employee.EmployeeFormMapper;
-import com.manage.employee.entity.Department;
-import com.manage.employee.entity.Employee;
-import com.manage.employee.entity.enums.Gender;
-import com.manage.employee.exception.EmployeeNotFoundException;
+import com.manage.employeemanagementmodel.entity.Department;
+import com.manage.employeemanagementmodel.entity.Employee;
+import com.manage.employeemanagementmodel.entity.enums.Gender;
+import com.manage.employeemanagementmodel.exception.EmployeeNotFoundException;
 import com.manage.employee.repository.EmployeeRepository;
 import com.manage.employee.service.EmployeeService;
 import com.manage.employee.service.impl.EmployeeServiceImpl;

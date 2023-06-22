@@ -2,7 +2,7 @@ package com.manage.job_department;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import com.manage.employee.entity.JobDepartment;
+import com.manage.employeemanagementmodel.entity.JobDepartment;
 import com.manage.employee.repository.JobDepartmentRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
