@@ -1,2 +1,4 @@
-package com.timesheet.controller;public class TimesheetController {
+package com.timesheet.controller;
+
+public class TimesheetController {
 }

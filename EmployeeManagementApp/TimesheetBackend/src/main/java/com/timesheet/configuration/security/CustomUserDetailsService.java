@@ -1,6 +1,7 @@
-package com.timesheet.configuration;
+package com.timesheet.configuration.security;
 
 import com.manage.employeemanagementmodel.entity.Account;
+import com.timesheet.configuration.security.CustomUserDetails;
 import com.timesheet.repository.AccountRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

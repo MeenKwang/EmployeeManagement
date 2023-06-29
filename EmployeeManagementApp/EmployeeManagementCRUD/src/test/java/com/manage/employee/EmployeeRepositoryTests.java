@@ -43,10 +43,10 @@ public class EmployeeRepositoryTests {
 		Department department = testEntityManager.find(Department.class, 1);
 		Employee buddy = testEntityManager.find(Employee.class, 1);
 		Account account = new Account();
-		account.setId(5);
+		account.setId(4);
 		JobDepartment jobDepartment = new JobDepartment();
-		jobDepartment.setId(3);
-		Employee employee = new Employee(null, "HR", "HR", Gender.FEMALE, LocalDate.now(), LocalDate.now(), "hr@gmail.com", "test_repo_photo.png", true, null, department, null, null, null, null);
+		jobDepartment.setId(1);
+		Employee employee = new Employee(null, "PM", "PM", Gender.MALE, LocalDate.now(), LocalDate.now(), "pm@gmail.com", "test_repo_photo.png", true, null, department, null, null, null, null);
 		
 		Employee savedEmployee = employeeRepository.save(employee);
 		assertThat(savedEmployee).isNotNull();

@@ -26,13 +26,17 @@ public class Account implements Serializable{
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
 	private List<Role> roles = new ArrayList<>();
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "refresh_token_id")
+	private RefreshToken refreshToken;
 
-	public Account(Integer id, String username, String password, boolean enabled, List<Role> roles) {
+	public Account(Integer id, String username, String password, boolean enabled, List<Role> roles, RefreshToken refreshToken) {
 		this.id = id;
 		this.username = username;
 		this.password = password;
 		this.enabled = enabled;
 		this.roles = roles;
+		this.refreshToken = refreshToken;
 	}
 
 	public Account() {
@@ -77,5 +81,13 @@ public class Account implements Serializable{
 
 	public void setRoles(List<Role> roles) {
 		this.roles = roles;
+	}
+
+	public RefreshToken getRefreshToken() {
+		return refreshToken;
+	}
+
+	public void setRefreshToken(RefreshToken refreshToken) {
+		this.refreshToken = refreshToken;
 	}
 }

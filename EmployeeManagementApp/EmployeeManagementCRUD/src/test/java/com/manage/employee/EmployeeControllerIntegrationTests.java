@@ -41,7 +41,7 @@ public class EmployeeControllerIntegrationTests {
         assertThat(employeeController).isNotNull();
     }
 
-    //Integration Test
+    //Unit Test
     @Test
     public void returnMyFirstPageTest() throws Exception {
         this.mockMvc.perform(

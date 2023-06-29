@@ -1,2 +1,24 @@
-package com.timesheet.service.impl;public class AccountServiceImpl {
+package com.timesheet.service.impl;
+
+import com.manage.employeemanagementmodel.entity.Account;
+import com.timesheet.configuration.security.CustomUserDetails;
+import com.timesheet.repository.AccountRepository;
+import com.timesheet.service.AccountService;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+@Service
+@Transactional
+public class AccountServiceImpl implements AccountService {
+
+    private final AccountRepository accountRepository;
+
+    public AccountServiceImpl(AccountRepository accountRepository) {
+        this.accountRepository = accountRepository;
+    }
+
+    @Override
+    public Account save(Account account) {
+        return accountRepository.save(account);
+    }
 }

@@ -1,4 +1,4 @@
-package com.timesheet.configuration;
+package com.timesheet.configuration.security;
 
 import com.manage.employeemanagementmodel.entity.Account;
 import com.manage.employeemanagementmodel.entity.Role;
@@ -54,5 +54,13 @@ public class CustomUserDetails implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    public Account getAccount() {
+        return account;
+    }
+
+    public void setAccount(Account account) {
+        this.account = account;
     }
 }
