@@ -9,4 +9,6 @@ public interface EmployeeRepository extends JpaRepository<Employee, Integer> {
     @Query("SELECT new com.timesheet.dto.ProfileDto(CONCAT(em.firstName, ' ', em.lastName), em.account.username, em.birthDate, em.department.name, em.jobDepartment.name ) " +
             "FROM Employee em WHERE em.account.username = ?1")
     ProfileDto getEmployeeInfo(String accountUsername);
+    @Query("SELECT em.id FROM Employee em WHERE em.account.username =?1")
+    Integer getEmployeeId(String username);
 }

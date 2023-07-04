@@ -12,6 +12,7 @@ import com.timesheet.exception.RefreshTokenException;
 import com.timesheet.service.AccountService;
 import com.timesheet.service.RefreshTokenService;
 import com.timesheet.utilities.RefreshTokenUtil;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -19,10 +20,7 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
 
@@ -68,6 +66,7 @@ public class AuthRestController {
 
     @PostMapping("refresh_token")
     public ResponseEntity<?> getRefreshToken(@RequestBody @Validated RefreshTokenDto refreshTokenBody) {
+        System.out.println("Jump into refresh token api");
         String requestRefreshToken = refreshTokenBody.getRefreshToken();
         String requestAccessToken = refreshTokenBody.getAccessToken();
         Account account = refreshTokenService.findByToken(requestRefreshToken);

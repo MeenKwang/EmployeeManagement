@@ -8,6 +8,7 @@ import java.time.LocalDate;
 public class NoteFormDto {
     private Integer id;
     private Integer employeeId;
+    private Integer projectId;
     private Integer taskId;
     private String noteDescription;
     private Integer workingTime;
@@ -18,9 +19,10 @@ public class NoteFormDto {
     public NoteFormDto() {
     }
 
-    public NoteFormDto(Integer id, Integer employeeId, Integer taskId, String noteDescription, Integer workingTime, WorkingType workingType, LocalDate dateSubmit, TimeSheetStatus status) {
+    public NoteFormDto(Integer id, Integer employeeId, Integer projectId, Integer taskId, String noteDescription, Integer workingTime, WorkingType workingType, LocalDate dateSubmit, TimeSheetStatus status) {
         this.id = id;
         this.employeeId = employeeId;
+        this.projectId = projectId;
         this.taskId = taskId;
         this.noteDescription = noteDescription;
         this.workingTime = workingTime;
@@ -91,5 +93,28 @@ public class NoteFormDto {
 
     public void setStatus(TimeSheetStatus status) {
         this.status = status;
+    }
+
+    public Integer getProjectId() {
+        return projectId;
+    }
+
+    public void setProjectId(Integer projectId) {
+        this.projectId = projectId;
+    }
+
+    @Override
+    public String toString() {
+        return "NoteFormDto{" +
+                "id=" + id +
+                ", employeeId=" + employeeId +
+                ", projectId=" + projectId +
+                ", taskId=" + taskId +
+                ", noteDescription='" + noteDescription + '\'' +
+                ", workingTime=" + workingTime +
+                ", workingType=" + workingType +
+                ", dateSubmit=" + dateSubmit +
+                ", status=" + status +
+                '}';
     }
 }

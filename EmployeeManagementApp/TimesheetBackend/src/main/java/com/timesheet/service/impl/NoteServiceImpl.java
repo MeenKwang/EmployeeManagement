@@ -3,13 +3,20 @@ package com.timesheet.service.impl;
 import com.manage.employeemanagementmodel.entity.Note;
 import com.manage.employeemanagementmodel.exception.NoteNotFoundException;
 import com.timesheet.dto.NoteFormDto;
+import com.timesheet.dto.NoteViewDto;
+import com.timesheet.dto.NotesPerDayDto;
 import com.timesheet.dto.mapper.NoteFormDtoMapper;
 import com.timesheet.repository.NoteRepository;
 import com.timesheet.service.NoteService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -23,8 +30,15 @@ public class NoteServiceImpl implements NoteService {
         this.noteFormDtoMapper = noteFormDtoMapper;
     }
     @Override
-    public List<Note> listTimesheetPerWeekNumber(Integer employeeId, Integer weekNumber) {
-        return noteRepository.listNotesByWeekNumber(employeeId, weekNumber);
+    public List<NotesPerDayDto> listTimesheetPerWeekNumber(String username, Integer weekNumber) {
+        List<NoteViewDto> noteViewDtos = noteRepository.listNotesByWeekNumber(username, weekNumber);
+        Map<LocalDate, List<NoteViewDto>> notesPerDate = noteViewDtos.stream().collect(Collectors.groupingBy(NoteViewDto::getDateSubmit));
+        List<NotesPerDayDto> notesPerDayDtoList = new ArrayList<>();
+        for(Map.Entry<LocalDate, List<NoteViewDto>> entry : notesPerDate.entrySet()) {
+            notesPerDayDtoList.add(new NotesPerDayDto(entry.getKey(), entry.getValue()));
+        }
+        notesPerDayDtoList.sort(Comparator.comparing(NotesPerDayDto::getDateSubmit));
+        return notesPerDayDtoList;
     }
 
     @Override
@@ -37,7 +51,7 @@ public class NoteServiceImpl implements NoteService {
     public boolean deleteNote(Integer noteId) throws NoteNotFoundException {
         boolean exist = noteRepository.existsById(noteId);
         if (!exist) {
-            throw new NoteNotFoundException("Cannot find any note with the given infomation");
+            throw new NoteNotFoundException("Cannot find any note with the given information");
         } else {
             try {
                 noteRepository.deleteById(noteId);
@@ -58,5 +72,10 @@ public class NoteServiceImpl implements NoteService {
             return false;
         }
         return true;
+    }
+
+    @Override
+    public NoteFormDto getNoteFormById(Integer noteId) {
+        return noteRepository.getNoteFormById(noteId);
     }
 }

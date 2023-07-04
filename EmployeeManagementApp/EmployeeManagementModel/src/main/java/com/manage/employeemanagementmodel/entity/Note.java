@@ -17,7 +17,7 @@ public class Note implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	@Column(name = "note", nullable = false, length = 255)
+	@Column(name = "note", columnDefinition = "TEXT", nullable = false)
 	private String note;
 	@Column(name = "date_submit", nullable = false)
 	private LocalDate dateSubmit;

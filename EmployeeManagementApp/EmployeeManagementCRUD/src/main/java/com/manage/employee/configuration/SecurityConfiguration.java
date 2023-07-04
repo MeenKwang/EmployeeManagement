@@ -26,18 +26,18 @@ public class SecurityConfiguration {
         http
         	.csrf(customize -> customize.disable())
         	.cors(customize -> customize.disable())
-        	.httpBasic(Customizer.withDefaults())
-            .authorizeHttpRequests((authorizeHttpRequests) -> authorizeHttpRequests
-                    .requestMatchers("/employees").hasAnyAuthority("PM", "HR")
-                    .requestMatchers("employees/new", "employees/edit/*", "/delete/*").hasAuthority("HR")
-                    .anyRequest().authenticated()
-            )
-        	.formLogin(customizer -> customizer.loginPage("/login").usernameParameter("username").passwordParameter("password")
-        			.permitAll()
-            )
-        	.logout(customize -> customize.permitAll())
-                .rememberMe(customize -> customize.key("uniqueAndSecret").tokenValiditySeconds(86400 * 30));
-//        	.authorizeHttpRequests(customize -> customize.anyRequest().permitAll());
+//        	.httpBasic(Customizer.withDefaults())
+//            .authorizeHttpRequests((authorizeHttpRequests) -> authorizeHttpRequests
+//                    .requestMatchers("/employees").hasAnyAuthority("PM", "HR")
+//                    .requestMatchers("employees/new", "employees/edit/*", "/delete/*").hasAuthority("HR")
+//                    .anyRequest().authenticated()
+//            )
+//        	.formLogin(customizer -> customizer.loginPage("/login").usernameParameter("username").passwordParameter("password")
+//        			.permitAll()
+//            )
+//        	.logout(customize -> customize.permitAll())
+//                .rememberMe(customize -> customize.key("uniqueAndSecret").tokenValiditySeconds(86400 * 30));
+        	.authorizeHttpRequests(customize -> customize.anyRequest().permitAll());
 
         return http.build();
     }

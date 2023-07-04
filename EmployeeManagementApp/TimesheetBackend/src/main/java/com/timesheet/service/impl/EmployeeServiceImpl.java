@@ -1,5 +1,6 @@
 package com.timesheet.service.impl;
 
+import com.manage.employeemanagementmodel.entity.Employee;
 import com.timesheet.dto.ProfileDto;
 import com.timesheet.repository.EmployeeRepository;
 import com.timesheet.service.EmployeeService;
@@ -19,5 +20,10 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public ProfileDto getEmployeeInfo(String accountUsername) {
         return employeeRepository.getEmployeeInfo(accountUsername);
+    }
+
+    @Override
+    public Integer getEmployeeId(String username) {
+        return employeeRepository.getEmployeeId(username);
     }
 }

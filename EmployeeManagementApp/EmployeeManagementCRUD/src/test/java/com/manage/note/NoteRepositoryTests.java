@@ -32,7 +32,7 @@ public class NoteRepositoryTests {
         WorkingType workingType = WorkingType.ONSITE;
         TimeSheetStatus status = TimeSheetStatus.PENDING;
         Task task = new Task();
-        task.setId(3);
+        task.setId(7);
         Note note = new Note();
         note.setNote("*daily");
         note.setEmployee(employee);
@@ -40,7 +40,7 @@ public class NoteRepositoryTests {
         note.setWorkingType(workingType);
         note.setStatus(status);
         note.setWorkingTime(8);
-        String dateString = "09-06-2023";
+        String dateString = "13-06-2023";
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
         LocalDate date = LocalDate.parse(dateString, formatter);
         note.setDateSubmit(date);

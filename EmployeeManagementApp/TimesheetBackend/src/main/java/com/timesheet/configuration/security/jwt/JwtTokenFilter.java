@@ -42,9 +42,8 @@ public class JwtTokenFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        System.out.println("START DO FILTER JTW");
         if(!hasAuthorizationHeader(request)) {
-            System.out.println("hasAuthorizationHeader");
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             filterChain.doFilter(request,response);
             return;
         }
@@ -52,11 +51,10 @@ public class JwtTokenFilter extends OncePerRequestFilter {
         String accessToken = getAccessToken(request);
 
         if(!jwtTokenUtil.validateAccessToken(accessToken)) {
-            System.out.println("jwtTokenUtil");
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             filterChain.doFilter(request, response);
             return;
         }
-        System.out.println("ok");
 
         setAuthenticationContext(accessToken, request);
 
@@ -65,9 +63,7 @@ public class JwtTokenFilter extends OncePerRequestFilter {
 //            response.sendError(HttpServletResponse.SC_FORBIDDEN);
 //            return;
 //        }
-        System.out.println("1" + response.getStatus());
         filterChain.doFilter(request, response);
-        System.out.println("2" + response.getStatus());
 
     }
 

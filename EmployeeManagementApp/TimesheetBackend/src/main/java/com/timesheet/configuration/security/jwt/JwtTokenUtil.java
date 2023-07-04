@@ -5,6 +5,7 @@ import com.manage.employeemanagementmodel.entity.Role;
 import com.timesheet.configuration.security.CustomUserDetails;
 import com.timesheet.dto.RoleTokenDto;
 import io.jsonwebtoken.*;
+import jakarta.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -44,8 +45,6 @@ public class JwtTokenUtil {
         )
     */
     public String generateAccessToken(CustomUserDetails account) {
-        System.out.println("Token expired day: " + TOKEN_EXPIRED_DAY );
-        System.out.println("Secret key: " + SECRET_KEY );
         String accessToken = Jwts.builder()
                 .setSubject(String.format("%s", account.getUsername()))
                 .claim("roles", account.getAuthorities().toString())
@@ -101,5 +100,11 @@ public class JwtTokenUtil {
                 .parseClaimsJws(token)
                 .getBody();
     }
+    public String getAccessToken(HttpServletRequest request) {
+        String header = request.getHeader("Authorization");
 
+        String token = header.split(" ")[1].trim();
+
+        return token;
+    }
 }

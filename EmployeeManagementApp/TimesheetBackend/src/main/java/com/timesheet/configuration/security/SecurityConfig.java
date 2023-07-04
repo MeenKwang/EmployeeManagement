@@ -96,7 +96,7 @@ public class SecurityConfig {
     SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
         LOGGER.info("JUMP TO FILTER CHAIN");
         httpSecurity.csrf(AbstractHttpConfigurer::disable);
-//        httpSecurity.cors(AbstractHttpConfigurer::disable);
+        httpSecurity.cors(customizer -> {});
 
         httpSecurity.sessionManagement(customizer -> customizer.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
         httpSecurity.authorizeHttpRequests(customizer -> customizer.requestMatchers("/app/login", "/app/refresh_token").permitAll());
@@ -105,7 +105,7 @@ public class SecurityConfig {
         httpSecurity.exceptionHandling(customizer -> customizer
                 .authenticationEntryPoint(
                         ((request, response, authException) -> {
-                            LOGGER.info("WITH "+  response.getStatus()  +"-");
+                            LOGGER.info("WITH "+  response.getStatus()  + "-");
                             ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
                             ErrorMessage errorMessage = new ErrorMessage();
                             if (response.getStatus() == HttpServletResponse.SC_FORBIDDEN) {
