@@ -1,10 +1,13 @@
 package com.timesheet.controller;
 
+import com.manage.employeemanagementmodel.entity.Note;
 import com.timesheet.configuration.security.jwt.JwtTokenUtil;
 import com.timesheet.dto.NoteFormDto;
 import com.timesheet.dto.NotesPerDayDto;
 import com.timesheet.dto.ProjectSelectDto;
 import com.timesheet.dto.TaskSelectDto;
+import com.timesheet.dto.request_body.CheckInRequestDto;
+import com.timesheet.dto.request_body.NoteSummaryRequestDto;
 import com.timesheet.service.NoteService;
 import com.timesheet.service.PermissionService;
 import com.timesheet.service.ProjectService;
@@ -45,12 +48,12 @@ public class NoteRestController {
 
     @PostMapping("save")
     public ResponseEntity<?> saveNote(@RequestBody NoteFormDto noteFormDto) {
-        System.out.println(noteFormDto);
-//        try {
-//            Note note = noteService.saveNote(noteFormDto);
-//        } catch (Exception e) {
-//            return ResponseEntity.ok(false);
-//        }
+        try {
+            Note note = noteService.saveNote(noteFormDto);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.ok(false);
+        }
         return ResponseEntity.ok(true);
     }
 
@@ -94,9 +97,29 @@ public class NoteRestController {
 
     @GetMapping("note_by_id")
     public ResponseEntity<?> getNoteById(@RequestParam("noteId") Integer noteId) {
+        System.out.println("JUMP INTO THIS API!");
         try {
             NoteFormDto note = noteService.getNoteFormById(noteId);
+            System.out.println("NOTE: " + note);
             return ResponseEntity.ok(note);
+        } catch (Exception e) {
+            return ResponseEntity.ok(null);
+        }
+    }
+
+    @PostMapping("note_summary")
+    public ResponseEntity<?> getNoteSummary(@RequestBody NoteSummaryRequestDto noteSummaryRequest) {
+        try {
+            return ResponseEntity.ok().body(noteService.getTotalTimesheetHoursForEachDayInSpecificMonthAndYear(noteSummaryRequest));
+        } catch (Exception e) {
+            return ResponseEntity.ok(null);
+        }
+    }
+
+    @PostMapping("open_talk_count")
+    public ResponseEntity<?> getOpenTalkCount(@RequestBody CheckInRequestDto request) {
+        try {
+            return ResponseEntity.ok().body(noteService.getOpenTalkCount(request));
         } catch (Exception e) {
             return ResponseEntity.ok(null);
         }

@@ -2,6 +2,7 @@ package com.timesheet.dto;
 
 public class AccountResponseDto {
     private String email;
+    private Integer employeeId;
     private String accessToken;
     private String refreshToken;
 
@@ -11,6 +12,14 @@ public class AccountResponseDto {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public Integer getEmployeeId() {
+        return employeeId;
+    }
+
+    public void setEmployeeId(Integer employeeId) {
+        this.employeeId = employeeId;
     }
 
     public String getAccessToken() {

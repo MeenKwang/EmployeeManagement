@@ -3,9 +3,12 @@ package com.timesheet.service.impl;
 import com.manage.employeemanagementmodel.entity.Note;
 import com.manage.employeemanagementmodel.exception.NoteNotFoundException;
 import com.timesheet.dto.NoteFormDto;
+import com.timesheet.dto.NoteSummaryDto;
 import com.timesheet.dto.NoteViewDto;
 import com.timesheet.dto.NotesPerDayDto;
 import com.timesheet.dto.mapper.NoteFormDtoMapper;
+import com.timesheet.dto.request_body.CheckInRequestDto;
+import com.timesheet.dto.request_body.NoteSummaryRequestDto;
 import com.timesheet.repository.NoteRepository;
 import com.timesheet.service.NoteService;
 import org.springframework.stereotype.Service;
@@ -77,5 +80,15 @@ public class NoteServiceImpl implements NoteService {
     @Override
     public NoteFormDto getNoteFormById(Integer noteId) {
         return noteRepository.getNoteFormById(noteId);
+    }
+
+    @Override
+    public List<NoteSummaryDto> getTotalTimesheetHoursForEachDayInSpecificMonthAndYear(NoteSummaryRequestDto noteSummaryRequestDto) {
+        return noteRepository.getTotalTimesheetHoursForEachDayInSpecificMonthAndYear(noteSummaryRequestDto);
+    }
+
+    @Override
+    public Long getOpenTalkCount(CheckInRequestDto request) {
+        return noteRepository.getOpenTalkCount(request);
     }
 }

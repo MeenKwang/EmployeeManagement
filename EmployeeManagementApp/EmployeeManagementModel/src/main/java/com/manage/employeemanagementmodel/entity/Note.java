@@ -21,6 +21,8 @@ public class Note implements Serializable{
 	private String note;
 	@Column(name = "date_submit", nullable = false)
 	private LocalDate dateSubmit;
+	@Column(name = "date_modify", nullable = false)
+	private LocalDate dateModify;
 	@Column(name = "working_time")
 	private Integer workingTime;
 	@OneToOne
@@ -39,10 +41,11 @@ public class Note implements Serializable{
 	public Note() {
 	}
 
-	public Note(Integer id, String note, LocalDate dateSubmit, Integer workingTime, Task task, WorkingType workingType, Employee employee, TimeSheetStatus status) {
+	public Note(Integer id, String note, LocalDate dateSubmit, LocalDate dateModify, Integer workingTime, Task task, WorkingType workingType, Employee employee, TimeSheetStatus status) {
 		this.id = id;
 		this.note = note;
 		this.dateSubmit = dateSubmit;
+		this.dateModify = dateModify;
 		this.workingTime = workingTime;
 		this.task = task;
 		this.workingType = workingType;
@@ -112,5 +115,13 @@ public class Note implements Serializable{
 
 	public void setStatus(TimeSheetStatus status) {
 		this.status = status;
+	}
+
+	public LocalDate getDateModify() {
+		return dateModify;
+	}
+
+	public void setDateModify(LocalDate dateModify) {
+		this.dateModify = dateModify;
 	}
 }

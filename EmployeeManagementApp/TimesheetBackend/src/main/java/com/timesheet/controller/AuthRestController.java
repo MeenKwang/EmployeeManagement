@@ -4,15 +4,14 @@ import com.manage.employeemanagementmodel.entity.Account;
 import com.manage.employeemanagementmodel.entity.RefreshToken;
 import com.timesheet.configuration.security.CustomUserDetails;
 import com.timesheet.configuration.security.jwt.JwtTokenUtil;
-import com.timesheet.dto.AccountRefreshTokenDto;
 import com.timesheet.dto.AccountRequestDto;
 import com.timesheet.dto.AccountResponseDto;
 import com.timesheet.dto.RefreshTokenDto;
 import com.timesheet.exception.RefreshTokenException;
 import com.timesheet.service.AccountService;
+import com.timesheet.service.EmployeeService;
 import com.timesheet.service.RefreshTokenService;
-import com.timesheet.utilities.RefreshTokenUtil;
-import jakarta.servlet.http.HttpServletRequest;
+import com.timesheet.configuration.security.refreshtoken.RefreshTokenUtil;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -33,13 +32,15 @@ public class AuthRestController {
     private final AccountService accountService;
     private final RefreshTokenUtil refreshTokenUtil;
     private final RefreshTokenService refreshTokenService;
+    private final EmployeeService employeeService;
 
-    public AuthRestController(AuthenticationManager authenticationManager, JwtTokenUtil jwtTokenUtil, AccountService accountService, RefreshTokenUtil refreshTokenUtil, RefreshTokenService refreshTokenService) {
+    public AuthRestController(AuthenticationManager authenticationManager, JwtTokenUtil jwtTokenUtil, AccountService accountService, RefreshTokenUtil refreshTokenUtil, RefreshTokenService refreshTokenService, EmployeeService employeeService) {
         this.authenticationManager = authenticationManager;
         this.jwtTokenUtil = jwtTokenUtil;
         this.accountService = accountService;
         this.refreshTokenUtil = refreshTokenUtil;
         this.refreshTokenService = refreshTokenService;
+        this.employeeService = employeeService;
     }
 
     @PostMapping("login")
@@ -51,11 +52,12 @@ public class AuthRestController {
             CustomUserDetails account = (CustomUserDetails) authentication.getPrincipal();
             String accessToken = jwtTokenUtil.generateAccessToken(account);
             Account myAccount = account.getAccount();
-            RefreshToken refreshToken = refreshTokenUtil.generateRefreshToken();
+            RefreshToken refreshToken = refreshTokenUtil.generateRefreshToken(account);
             myAccount.setRefreshToken(refreshToken);
             accountService.save(myAccount);
             AccountResponseDto accountResponseDto = new AccountResponseDto();
             accountResponseDto.setEmail(account.getUsername());
+            accountResponseDto.setEmployeeId(employeeService.getEmployeeId(account.getUsername()));
             accountResponseDto.setAccessToken(accessToken);
             accountResponseDto.setRefreshToken(refreshToken.getToken());
             return ResponseEntity.ok(accountResponseDto);

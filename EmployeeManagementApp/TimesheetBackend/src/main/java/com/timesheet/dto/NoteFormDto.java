@@ -14,12 +14,13 @@ public class NoteFormDto {
     private Integer workingTime;
     private WorkingType workingType;
     private LocalDate dateSubmit;
+    private LocalDate dateModify;
     private TimeSheetStatus status;
 
     public NoteFormDto() {
     }
 
-    public NoteFormDto(Integer id, Integer employeeId, Integer projectId, Integer taskId, String noteDescription, Integer workingTime, WorkingType workingType, LocalDate dateSubmit, TimeSheetStatus status) {
+    public NoteFormDto(Integer id, Integer employeeId, Integer projectId, Integer taskId, String noteDescription, Integer workingTime, WorkingType workingType, LocalDate dateSubmit, TimeSheetStatus status, LocalDate dateModify) {
         this.id = id;
         this.employeeId = employeeId;
         this.projectId = projectId;
@@ -29,6 +30,7 @@ public class NoteFormDto {
         this.workingType = workingType;
         this.dateSubmit = dateSubmit;
         this.status = status;
+        this.dateModify = dateModify;
     }
 
     public Integer getEmployeeId() {
@@ -102,7 +104,12 @@ public class NoteFormDto {
     public void setProjectId(Integer projectId) {
         this.projectId = projectId;
     }
-
+    public LocalDate getDateModify() {
+        return dateModify;
+    }
+    public void setDateModify(LocalDate dateModify) {
+        this.dateModify = dateModify;
+    }
     @Override
     public String toString() {
         return "NoteFormDto{" +
@@ -114,6 +121,7 @@ public class NoteFormDto {
                 ", workingTime=" + workingTime +
                 ", workingType=" + workingType +
                 ", dateSubmit=" + dateSubmit +
+                ", dateModify=" + dateModify +
                 ", status=" + status +
                 '}';
     }

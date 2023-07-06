@@ -2,7 +2,10 @@ package com.timesheet.repository;
 
 import com.manage.employeemanagementmodel.entity.Note;
 import com.timesheet.dto.NoteFormDto;
+import com.timesheet.dto.NoteSummaryDto;
 import com.timesheet.dto.NoteViewDto;
+import com.timesheet.dto.request_body.CheckInRequestDto;
+import com.timesheet.dto.request_body.NoteSummaryRequestDto;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -22,7 +25,12 @@ public interface NoteRepository extends JpaRepository<Note, Integer> {
     @Query("UPDATE Note note SET note.status = com.manage.employeemanagementmodel.entity.enums.TimeSheetStatus.PENDING " +
             "WHERE WEEK(note.dateSubmit) BETWEEN (?1 - 1) AND (?1)")
     void pendingAllNewTimesheetRequest(Integer currentWeekNumber);
-    @Query("SELECT new com.timesheet.dto.NoteFormDto(note.id, note.employee.id, note.task.project.id, note.task.id, note.note, note.workingTime, note.workingType, note.dateSubmit, note.status) " +
+    @Query("SELECT new com.timesheet.dto.NoteFormDto(note.id, note.employee.id, note.task.project.id, note.task.id, note.note, note.workingTime, note.workingType, note.dateSubmit, note.status, note.dateModify) " +
             "FROM Note note WHERE note.id = ?1")
     NoteFormDto getNoteFormById(@Param("id") Integer id);
+    @Query("SELECT new com.timesheet.dto.NoteSummaryDto(note.dateSubmit, SUM(note.workingTime)) FROM Note note WHERE MONTH(note.dateSubmit) = :#{#request.month} AND YEAR(note.dateSubmit) = :#{#request.year} AND note.employee.id = :#{#request.employeeId}" +
+            " AND note.status IN :#{#request.statuses} GROUP BY note.dateSubmit")
+    List<NoteSummaryDto> getTotalTimesheetHoursForEachDayInSpecificMonthAndYear(NoteSummaryRequestDto request);
+    @Query("SELECT count(note) FROM Note note WHERE MONTH(note.dateSubmit) = :#{#request.month} AND YEAR(note.dateSubmit) = :#{#request.year} AND note.employee.id = :#{#request.employeeId} AND note.task.id = 7")
+    Long getOpenTalkCount(CheckInRequestDto request);
 }

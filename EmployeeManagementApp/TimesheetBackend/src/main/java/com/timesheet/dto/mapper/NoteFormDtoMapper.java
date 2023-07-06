@@ -15,5 +15,6 @@ public interface NoteFormDtoMapper {
     @Mapping(target = "status", source = "status")
     @Mapping(target = "workingTime", source = "workingTime")
     @Mapping(target = "employee.id", source = "employeeId")
+    @Mapping(target = "dateModify", source = "dateModify")
     Note noteFormDtoToNote(NoteFormDto noteFormDto);
 }

@@ -3,9 +3,7 @@ package com.timesheet.controller;
 import com.timesheet.service.EmployeeService;
 import com.timesheet.service.PermissionService;
 import jakarta.servlet.http.HttpServletRequest;
-import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -13,12 +11,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("app/profile")
-public class ProfileController {
+public class ProfileRestController {
 
     private final EmployeeService employeeService;
     private final PermissionService permissionService;
 
-    public ProfileController(EmployeeService employeeService, PermissionService permissionService) {
+    public ProfileRestController(EmployeeService employeeService, PermissionService permissionService) {
         this.employeeService = employeeService;
         this.permissionService = permissionService;
     }
