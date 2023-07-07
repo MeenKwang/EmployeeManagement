@@ -70,10 +70,9 @@ public class AuthRestController {
     public ResponseEntity<?> getRefreshToken(@RequestBody @Validated RefreshTokenDto refreshTokenBody) {
         System.out.println("Jump into refresh token api");
         String requestRefreshToken = refreshTokenBody.getRefreshToken();
-        String requestAccessToken = refreshTokenBody.getAccessToken();
         Account account = refreshTokenService.findByToken(requestRefreshToken);
-        if(account.getUsername() != jwtTokenUtil.getSubject(requestAccessToken)) {
-            throw new RefreshTokenException(requestRefreshToken, "Refresh token or access token is not valid!");
+        if(account.getUsername() != jwtTokenUtil.getSubject(requestRefreshToken)) {
+            throw new RefreshTokenException(requestRefreshToken, "Refresh token is not valid!");
         }
         if(account.getRefreshToken().getExpiredDate().compareTo(new Date()) < 0) {
             throw new RefreshTokenException(requestRefreshToken, "Refresh token was expired. Please make a new sign in request");

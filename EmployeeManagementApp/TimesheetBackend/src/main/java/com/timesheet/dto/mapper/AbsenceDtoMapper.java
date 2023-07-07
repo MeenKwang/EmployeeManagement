@@ -11,6 +11,7 @@ public interface AbsenceDtoMapper {
     @Mapping(target = "reason" , source = "reason")
     @Mapping(target = "typeOff.id" , source = "absenceTypeOffId")
     @Mapping(target = "dateRequest" , source = "dateSubmit")
+    @Mapping(target = "typeTimeOff" , source = "typeTimeOff")
     @Mapping(target = "timeOff" , source = "timeOff")
     @Mapping(target = "employee.id" , source = "employeeId")
     Absence absenceDtoToAbsence(AbsenceDto absenceDto);

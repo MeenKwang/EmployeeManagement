@@ -1,5 +1,6 @@
 package com.manage.employeemanagementmodel.entity;
 
+import com.manage.employeemanagementmodel.entity.enums.CheckInStatus;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
@@ -14,6 +15,9 @@ public class CheckIn {
     private LocalDateTime checkInTime;
     @Column(name = "check_out_time")
     private LocalDateTime checkOutTime;
+    @Column(name = "status")
+    @Enumerated(EnumType.STRING)
+    private CheckInStatus status;
     @ManyToOne
     @JoinColumn(name = "employee_id")
     private Employee employee;
@@ -21,10 +25,11 @@ public class CheckIn {
     public CheckIn() {
     }
 
-    public CheckIn(Integer id, LocalDateTime checkInTime, LocalDateTime checkOutTime, Employee employee) {
+    public CheckIn(Integer id, LocalDateTime checkInTime, LocalDateTime checkOutTime, CheckInStatus status, Employee employee) {
         this.id = id;
         this.checkInTime = checkInTime;
         this.checkOutTime = checkOutTime;
+        this.status = status;
         this.employee = employee;
     }
 
@@ -50,6 +55,14 @@ public class CheckIn {
 
     public void setCheckOutTime(LocalDateTime checkOutTime) {
         this.checkOutTime = checkOutTime;
+    }
+
+    public CheckInStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(CheckInStatus status) {
+        this.status = status;
     }
 
     public Employee getEmployee() {

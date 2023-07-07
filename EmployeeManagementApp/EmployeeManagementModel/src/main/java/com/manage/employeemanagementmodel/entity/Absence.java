@@ -1,5 +1,7 @@
 package com.manage.employeemanagementmodel.entity;
 
+import com.manage.employeemanagementmodel.entity.enums.AbsenceStatus;
+import com.manage.employeemanagementmodel.entity.enums.TypeTimeOff;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
@@ -17,8 +19,14 @@ public class Absence {
     private AbsenceTypeOff typeOff;
     @Column(name = "date_request")
     private LocalDate dateRequest;
+    @Column(name = "type_time_off")
+    @Enumerated(EnumType.STRING)
+    private TypeTimeOff typeTimeOff;
     @Column(name = "time_off")
-    private Integer timeOff;
+    private Double timeOff;
+    @Column(name = "status")
+    @Enumerated(EnumType.STRING)
+    private AbsenceStatus status;
     @ManyToOne
     @JoinColumn(name = "employee_id")
     private Employee employee;
@@ -26,11 +34,12 @@ public class Absence {
     public Absence() {
     }
 
-    public Absence(Integer id, String reason, AbsenceTypeOff typeOff, LocalDate dateRequest, Integer timeOff, Employee employee) {
+    public Absence(Integer id, String reason, AbsenceTypeOff typeOff, LocalDate dateRequest, TypeTimeOff typeTimeOff, Double timeOff, Employee employee) {
         this.id = id;
         this.reason = reason;
         this.typeOff = typeOff;
         this.dateRequest = dateRequest;
+        this.typeTimeOff = typeTimeOff;
         this.timeOff = timeOff;
         this.employee = employee;
     }
@@ -67,11 +76,11 @@ public class Absence {
         this.dateRequest = dateRequest;
     }
 
-    public Integer getTimeOff() {
+    public Double getTimeOff() {
         return timeOff;
     }
 
-    public void setTimeOff(Integer timeOff) {
+    public void setTimeOff(Double timeOff) {
         this.timeOff = timeOff;
     }
 
@@ -81,5 +90,12 @@ public class Absence {
 
     public void setEmployee(Employee employee) {
         this.employee = employee;
+    }
+
+    public TypeTimeOff getTypeTimeOff() {
+        return typeTimeOff;
+    }
+    public void setTypeTimeOff(TypeTimeOff typeTimeOff) {
+        this.typeTimeOff = typeTimeOff;
     }
 }
