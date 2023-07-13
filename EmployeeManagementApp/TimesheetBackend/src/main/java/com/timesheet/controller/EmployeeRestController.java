@@ -6,6 +6,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -27,6 +28,17 @@ public class EmployeeRestController {
         try {
             Integer employeeId = employeeService.getEmployeeId(username);
             return ResponseEntity.ok(employeeId);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.ok(null);
+        }
+    }
+    @GetMapping("view_staff")
+    public ResponseEntity<?> viewStaff(@RequestParam("buddyId") Integer buddyId, @RequestParam("pageNumber") Integer pageNumber,
+                                       @RequestParam("pageSize") Integer pageSize, @RequestParam("nameSearch") String nameSearch,
+                                       @RequestParam("sortField") String sortField, @RequestParam("sortOrder") String sortOrder) {
+        try {
+            return ResponseEntity.ok(employeeService.getStaffListByNativeQuery(buddyId, pageNumber, pageSize, nameSearch, sortField, sortOrder));
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.ok(null);

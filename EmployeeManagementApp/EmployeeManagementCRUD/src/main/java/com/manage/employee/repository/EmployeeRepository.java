@@ -41,13 +41,13 @@ public interface EmployeeRepository extends JpaRepository<Employee, Integer> {
 	//if one field is null, whole object return null
 	@Query("SELECT NEW com.manage.employee.dto.EmployeeProfileDto(CONCAT(em.firstName, ' ', em.lastName), "
 			+ "em.gender, em.hiringDate, em.department.name, "
-			+ "CASE WHEN em.buddy IS NOT NULL THEN CONCAT(em.firstName, ' ', em.lastName) "
+			+ "CASE WHEN em.buddy IS NOT NULL THEN CONCAT(buddy.firstName, ' ', buddy.lastName) "
 			+ "ELSE 'Has not have any buddy' "
 			+ "END, "
 			+ "CASE WHEN em.account IS NOT NULL THEN em.account.username "
 			+ "ELSE 'Employee does not have account' "
 			+ "END) "
-			+ "FROM Employee em WHERE em.id = :employeeId")
+			+ "FROM Employee em LEFT JOIN Employee buddy ON em.buddy.id = buddy.id WHERE em.id = :employeeId")
 	EmployeeProfileDto findEmployeeProfile(@Param("employeeId") Integer employeeId);
 
 	EmployeeBasicInfoInterfaceDto findEmployeeById(Integer id);

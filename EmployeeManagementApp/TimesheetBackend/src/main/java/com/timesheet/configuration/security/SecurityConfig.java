@@ -105,7 +105,7 @@ public class SecurityConfig {
         httpSecurity.exceptionHandling(customizer -> customizer
                 .authenticationEntryPoint(
                         ((request, response, authException) -> {
-                            LOGGER.info("WITH "+  response.getStatus()  + "-");
+                            System.out.println(authException.getMessage());
                             ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
                             ErrorMessage errorMessage = new ErrorMessage();
                             if (response.getStatus() == HttpServletResponse.SC_FORBIDDEN) {
@@ -139,6 +139,7 @@ public class SecurityConfig {
                         }))
         );
         httpSecurity.addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class);
+
 //        httpSecurity.addFilterBefore(corsFilter(), SessionManagementFilter.class);
         return httpSecurity.build();
     }

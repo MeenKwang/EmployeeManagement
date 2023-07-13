@@ -15,10 +15,15 @@ public class Absence {
     @Column(name = "reason")
     private String reason;
     @ManyToOne
+    @JoinColumn(name = "absence_type_id")
+    private AbsenceType absenceType;
+    @ManyToOne
     @JoinColumn(name = "absence_type_off_id")
     private AbsenceTypeOff typeOff;
     @Column(name = "date_request")
     private LocalDate dateRequest;
+    @Column(name = "date_submit")
+    private LocalDate dateSubmit;
     @Column(name = "type_time_off")
     @Enumerated(EnumType.STRING)
     private TypeTimeOff typeTimeOff;
@@ -34,11 +39,13 @@ public class Absence {
     public Absence() {
     }
 
-    public Absence(Integer id, String reason, AbsenceTypeOff typeOff, LocalDate dateRequest, TypeTimeOff typeTimeOff, Double timeOff, Employee employee) {
+    public Absence(Integer id, String reason, AbsenceType absenceType, AbsenceTypeOff typeOff, LocalDate dateRequest, LocalDate dateSubmit, TypeTimeOff typeTimeOff, Double timeOff, Employee employee) {
         this.id = id;
         this.reason = reason;
+        this.absenceType = absenceType;
         this.typeOff = typeOff;
         this.dateRequest = dateRequest;
+        this.dateSubmit = dateSubmit;
         this.typeTimeOff = typeTimeOff;
         this.timeOff = timeOff;
         this.employee = employee;
@@ -97,5 +104,45 @@ public class Absence {
     }
     public void setTypeTimeOff(TypeTimeOff typeTimeOff) {
         this.typeTimeOff = typeTimeOff;
+    }
+
+    public LocalDate getDateSubmit() {
+        return dateSubmit;
+    }
+
+    public void setDateSubmit(LocalDate dateSubmit) {
+        this.dateSubmit = dateSubmit;
+    }
+
+    public AbsenceStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(AbsenceStatus status) {
+        this.status = status;
+    }
+
+    public AbsenceType getAbsenceType() {
+        return absenceType;
+    }
+
+    public void setAbsenceType(AbsenceType absenceType) {
+        this.absenceType = absenceType;
+    }
+
+    @Override
+    public String toString() {
+        return "Absence{" +
+                "id=" + id +
+                ", reason='" + reason + '\'' +
+                ", absenceType=" + absenceType +
+                ", typeOff=" + typeOff +
+                ", dateRequest=" + dateRequest +
+                ", dateSubmit=" + dateSubmit +
+                ", typeTimeOff=" + typeTimeOff +
+                ", timeOff=" + timeOff +
+                ", status=" + status +
+                ", employee=" + employee +
+                '}';
     }
 }

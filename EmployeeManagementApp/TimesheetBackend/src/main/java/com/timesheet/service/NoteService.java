@@ -1,6 +1,7 @@
 package com.timesheet.service;
 
 import com.manage.employeemanagementmodel.entity.Note;
+import com.manage.employeemanagementmodel.entity.enums.TimeSheetStatus;
 import com.manage.employeemanagementmodel.exception.NoteNotFoundException;
 import com.timesheet.dto.NoteFormDto;
 import com.timesheet.dto.NoteSummaryDto;
@@ -21,4 +22,6 @@ public interface NoteService {
     NoteFormDto getNoteFormById(Integer noteId);
     List<NoteSummaryDto> getTotalTimesheetHoursForEachDayInSpecificMonthAndYear(NoteSummaryRequestDto noteSummaryRequestDto);
     Long getOpenTalkCount(CheckInRequestDto request);
+    List<NoteViewDto> listAllPendingTimesheetOfStaffInParticularMonthAndYear(int staffId, int month, int year);
+    void updatePendingTimesheetStatus(int timesheetId, TimeSheetStatus status);
 }

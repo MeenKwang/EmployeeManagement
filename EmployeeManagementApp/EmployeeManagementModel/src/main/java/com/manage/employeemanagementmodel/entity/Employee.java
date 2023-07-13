@@ -24,7 +24,7 @@ public class Employee implements Serializable{
 	private String firstName;
 	@Column(name = "last_name", nullable = false, length = 255)
 	private String lastName;
-	@Column(name = "gender")
+	@Column(name = "gender", nullable = false)
 	@Enumerated(EnumType.STRING)
 	private Gender gender;
 	@Column(name = "birth_date", nullable = false)
@@ -35,16 +35,16 @@ public class Employee implements Serializable{
 	private String email;
 	@Column(name = "photo", length = 255, nullable = true)
 	private String photo;
-	@Column(name = "enabled", nullable = false)
+	@Column(name = "enabled")
 	private boolean enabled;
 	@ManyToOne
-	@JoinColumn(name = "buddy_id", nullable = true)
+	@JoinColumn(name = "buddy_id")
 	private Employee buddy;
 	@OneToOne
 	@JoinColumn(name = "department_id")
 	private Department department;
 	//Remember to initialize the collection, if not, it can't be got (maybe hibernate can't manipulate an un-initialized collection.)
-	@OneToMany(mappedBy = "employee",cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(mappedBy = "employee", cascade = CascadeType.ALL, orphanRemoval = true)
 	@JsonIgnore
 	private List<Note> notes = new ArrayList<>();
 	@OneToOne(cascade = CascadeType.ALL)
@@ -56,12 +56,16 @@ public class Employee implements Serializable{
 	@OneToMany(mappedBy = "employee", cascade = CascadeType.ALL)
 	@JsonIgnore
 	private List<EmployeeBonus> employeeBonuses;
-
+	@OneToMany(mappedBy = "employee", cascade = CascadeType.ALL)
+	@JsonIgnore
+	private List<CheckIn> checkIns = new ArrayList<>();
+	@OneToMany(mappedBy = "employee", cascade = CascadeType.ALL)
+	@JsonIgnore
+	private List<Absence> absences = new ArrayList<>();
 	public Employee() {
 	}
 
-	public Employee(Integer id, String firstName, String lastName, Gender gender, LocalDate birthDate, LocalDate hiringDate, String email, String photo, boolean enabled, Employee buddy,
-					Department department, List<Note> notes, Account account, JobDepartment jobDepartment, List<EmployeeBonus> employeeBonuses) {
+	public Employee(Integer id, String firstName, String lastName, Gender gender, LocalDate birthDate, LocalDate hiringDate, String email, String photo, boolean enabled, Employee buddy, Department department, List<Note> notes, Account account, JobDepartment jobDepartment, List<EmployeeBonus> employeeBonuses, List<CheckIn> checkIns, List<Absence> absences) {
 		this.id = id;
 		this.firstName = firstName;
 		this.lastName = lastName;
@@ -73,10 +77,12 @@ public class Employee implements Serializable{
 		this.enabled = enabled;
 		this.buddy = buddy;
 		this.department = department;
+		this.notes = notes;
 		this.account = account;
 		this.jobDepartment = jobDepartment;
 		this.employeeBonuses = employeeBonuses;
-		this.notes = notes;
+		this.checkIns = checkIns;
+		this.absences = absences;
 	}
 
 	public Integer getId() {
@@ -191,6 +197,30 @@ public class Employee implements Serializable{
 		this.employeeBonuses = employeeBonuses;
 	}
 
+	public List<Note> getNotes() {
+		return notes;
+	}
+
+	public void setNotes(List<Note> notes) {
+		this.notes = notes;
+	}
+
+	public List<CheckIn> getCheckIns() {
+		return checkIns;
+	}
+
+	public void setCheckIns(List<CheckIn> checkIns) {
+		this.checkIns = checkIns;
+	}
+
+	public List<Absence> getAbsences() {
+		return absences;
+	}
+
+	public void setAbsences(List<Absence> absences) {
+		this.absences = absences;
+	}
+
 	@Transient
 	public String getPhotosImagePath() {
 		if(id == null || photo == null) {
@@ -204,4 +234,26 @@ public class Employee implements Serializable{
 		return firstName + " " + lastName;
 	}
 
+	@Override
+	public String toString() {
+		return "Employee{" +
+				"id=" + id +
+				", firstName='" + firstName + '\'' +
+				", lastName='" + lastName + '\'' +
+				", gender=" + gender +
+				", birthDate=" + birthDate +
+				", hiringDate=" + hiringDate +
+				", email='" + email + '\'' +
+				", photo='" + photo + '\'' +
+				", enabled=" + enabled +
+				", buddy=" + buddy +
+				", department=" + department +
+				", notes=" + notes +
+				", account=" + account +
+				", jobDepartment=" + jobDepartment +
+				", employeeBonuses=" + employeeBonuses +
+				", checkIns=" + checkIns +
+				", absences=" + absences +
+				'}';
+	}
 }

@@ -10,8 +10,8 @@ public class AbsenceTypeOff {
     private Integer id;
     @Column(name = "name")
     private String name;
-    @Column(name = "default_time_off")
-    private Integer defaultTimeOff;
+    @Column(name = "description")
+    private String description;
     @ManyToOne
     @JoinColumn(name = "absence_type_id")
     private AbsenceType absenceType;
@@ -19,10 +19,10 @@ public class AbsenceTypeOff {
     public AbsenceTypeOff() {
     }
 
-    public AbsenceTypeOff(Integer id, String name, Integer defaultTimeOff, AbsenceType absenceType) {
+    public AbsenceTypeOff(Integer id, String name, String description, AbsenceType absenceType) {
         this.id = id;
         this.name = name;
-        this.defaultTimeOff = defaultTimeOff;
+        this.description = description;
         this.absenceType = absenceType;
     }
 
@@ -42,12 +42,12 @@ public class AbsenceTypeOff {
         this.name = name;
     }
 
-    public Integer getDefaultTimeOff() {
-        return defaultTimeOff;
+    public String getDescription() {
+        return description;
     }
 
-    public void setDefaultTimeOff(Integer defaultTimeOff) {
-        this.defaultTimeOff = defaultTimeOff;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public AbsenceType getAbsenceType() {
@@ -56,5 +56,15 @@ public class AbsenceTypeOff {
 
     public void setAbsenceType(AbsenceType absenceType) {
         this.absenceType = absenceType;
+    }
+
+    @Override
+    public String toString() {
+        return "AbsenceTypeOff{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", absenceType=" + absenceType +
+                '}';
     }
 }

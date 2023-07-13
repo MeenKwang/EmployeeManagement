@@ -1,6 +1,7 @@
 package com.timesheet.controller;
 
 import com.manage.employeemanagementmodel.entity.Note;
+import com.manage.employeemanagementmodel.entity.enums.TimeSheetStatus;
 import com.timesheet.configuration.security.jwt.JwtTokenUtil;
 import com.timesheet.dto.NoteFormDto;
 import com.timesheet.dto.NotesPerDayDto;
@@ -124,4 +125,27 @@ public class NoteRestController {
             return ResponseEntity.ok(null);
         }
     }
+
+    @GetMapping("staff_timesheet_by_month")
+    public ResponseEntity<?> getStaffTimesheetByMonthAndYear(@RequestParam("staffId") Integer staffId,
+                                                             @RequestParam("month") Integer month,
+                                                             @RequestParam("year") Integer year) {
+        try {
+            return ResponseEntity.ok().body(noteService.listAllPendingTimesheetOfStaffInParticularMonthAndYear(staffId, month, year));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.ok(null);
+        }
+    }
+
+    @PutMapping("update_staff_timesheet_status")
+    public ResponseEntity<?> updateTimesheetStatus(@RequestParam("noteId") Integer noteId, @RequestParam("status") TimeSheetStatus status) {
+        try {
+            noteService.updatePendingTimesheetStatus(noteId, status);
+        } catch (Exception e) {
+            return ResponseEntity.ok(false);
+        }
+        return ResponseEntity.ok(true);
+    }
+
 }

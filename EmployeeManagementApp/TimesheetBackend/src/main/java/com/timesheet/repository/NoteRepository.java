@@ -1,6 +1,8 @@
 package com.timesheet.repository;
 
 import com.manage.employeemanagementmodel.entity.Note;
+import com.manage.employeemanagementmodel.entity.enums.AbsenceStatus;
+import com.manage.employeemanagementmodel.entity.enums.TimeSheetStatus;
 import com.timesheet.dto.NoteFormDto;
 import com.timesheet.dto.NoteSummaryDto;
 import com.timesheet.dto.NoteViewDto;
@@ -33,4 +35,12 @@ public interface NoteRepository extends JpaRepository<Note, Integer> {
     List<NoteSummaryDto> getTotalTimesheetHoursForEachDayInSpecificMonthAndYear(NoteSummaryRequestDto request);
     @Query("SELECT count(note) FROM Note note WHERE MONTH(note.dateSubmit) = :#{#request.month} AND YEAR(note.dateSubmit) = :#{#request.year} AND note.employee.id = :#{#request.employeeId} AND note.task.id = 7")
     Long getOpenTalkCount(CheckInRequestDto request);
+    @Query("SELECT new com.timesheet.dto.NoteViewDto(note.id, note.task.project.name, note.task.name, note.note, note.workingTime, note.dateSubmit, note.status) " +
+            "FROM Note note WHERE MONTH(note.dateSubmit) = ?2 AND YEAR(note.dateSubmit) = ?3 AND note.employee.id = ?1 ORDER BY note.dateSubmit ASC")
+    List<NoteViewDto> listAllPendingTimesheetOfStaffInParticularMonth(int staffId, int month, int year);
+    @Modifying
+    @Query("UPDATE Note note SET note.status = ?2 " +
+            "WHERE note.id = ?1")
+    void updatePendingTimesheetStatus(int timesheetId, TimeSheetStatus status);
+
 }

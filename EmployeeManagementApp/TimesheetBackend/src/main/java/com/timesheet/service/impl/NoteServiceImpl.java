@@ -1,6 +1,7 @@
 package com.timesheet.service.impl;
 
 import com.manage.employeemanagementmodel.entity.Note;
+import com.manage.employeemanagementmodel.entity.enums.TimeSheetStatus;
 import com.manage.employeemanagementmodel.exception.NoteNotFoundException;
 import com.timesheet.dto.NoteFormDto;
 import com.timesheet.dto.NoteSummaryDto;
@@ -90,5 +91,15 @@ public class NoteServiceImpl implements NoteService {
     @Override
     public Long getOpenTalkCount(CheckInRequestDto request) {
         return noteRepository.getOpenTalkCount(request);
+    }
+
+    @Override
+    public List<NoteViewDto> listAllPendingTimesheetOfStaffInParticularMonthAndYear(int staffId, int month, int year) {
+        return noteRepository.listAllPendingTimesheetOfStaffInParticularMonth(staffId, month, year);
+    }
+
+    @Override
+    public void updatePendingTimesheetStatus(int timesheetId, TimeSheetStatus status) {
+        noteRepository.updatePendingTimesheetStatus(timesheetId, status);
     }
 }

@@ -8,7 +8,9 @@ public class AbsenceDto {
     private Integer id;
     private String reason;
     private Integer employeeId;
+    private Integer absenceTypeId;
     private Integer absenceTypeOffId;
+    private LocalDate dateRequest;
     private LocalDate dateSubmit;
     private TypeTimeOff typeTimeOff;
     private Double timeOff;
@@ -16,11 +18,13 @@ public class AbsenceDto {
     public AbsenceDto() {
     }
 
-    public AbsenceDto(Integer id, String reason, Integer employeeId, Integer absenceTypeOffId, LocalDate dateSubmit, TypeTimeOff typeTimeOff, Double timeOff) {
+    public AbsenceDto(Integer id, String reason, Integer employeeId, Integer absenceTypeId, Integer absenceTypeOffId, LocalDate dateRequest, LocalDate dateSubmit, TypeTimeOff typeTimeOff, Double timeOff) {
         this.id = id;
         this.reason = reason;
         this.employeeId = employeeId;
+        this.absenceTypeId = absenceTypeId;
         this.absenceTypeOffId = absenceTypeOffId;
+        this.dateRequest = dateRequest;
         this.dateSubmit = dateSubmit;
         this.typeTimeOff = typeTimeOff;
         this.timeOff = timeOff;
@@ -80,5 +84,21 @@ public class AbsenceDto {
 
     public void setTypeTimeOff(TypeTimeOff typeTimeOff) {
         this.typeTimeOff = typeTimeOff;
+    }
+
+    public LocalDate getDateRequest() {
+        return dateRequest;
+    }
+
+    public void setDateRequest(LocalDate dateRequest) {
+        this.dateRequest = dateRequest;
+    }
+
+    public Integer getAbsenceTypeId() {
+        return absenceTypeId;
+    }
+
+    public void setAbsenceTypeId(Integer absenceTypeId) {
+        this.absenceTypeId = absenceTypeId;
     }
 }
