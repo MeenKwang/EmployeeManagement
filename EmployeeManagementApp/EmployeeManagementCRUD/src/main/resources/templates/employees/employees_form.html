@@ -71,6 +71,18 @@
 						</select>
 					</div>
 				</div>
+
+				<div class="form-group row mb-3">
+					<label class="col-sm-4 col-form-label">Job Department</label>
+					<div class="col-sm-8">
+						<select class="form-control" th:field="*{jobDepartmentId}">
+							<option value="" selected>----SELECT JOB DEPARTMENT----</option>
+							<th:block th:each="jobDepartmentItem : ${listJobDepartments}">
+								<option th:value="${jobDepartmentItem.id}">[[${jobDepartmentItem.name}]]</option>
+							</th:block>
+						</select>
+					</div>
+				</div>
 				
 				<div class="form-group row mb-3">
 					<label class="col-sm-4 col-form-label">Buddy</label>
@@ -140,8 +152,8 @@
 		});
 
 		function showImageThumbnail(fileInput){
-			var file = fileInput.files[0];
-			var reader = new FileReader();
+			let file = fileInput.files[0];
+			let reader = new FileReader();
 			reader.onload = function(e) {
 				$("#thumbnail").attr("src", e.target.result);
 			}
@@ -149,8 +161,8 @@
 		}
 
 		function checkFileSize(fileInput) {
-			fileSize = fileInput.files[0].size;
-			
+			let fileSize = fileInput.files[0].size;
+
 			if(fileSize > MAX_FILE_SIZE) {
 				fileInput.setCustomValidity("You must choose an image with less than " + MAX_FILE_SIZE + " bytes!");
 				fileInput.reportValidity();
@@ -162,10 +174,10 @@
 		}
 		
 		function checkEmailUnique(form){
-			url="[[@{/employees/check_email_unique}]]";
-			employeeEmail = $("#email").val();
-			employeeId = $("#id").val();
-			params = {"id": employeeId, "email": employeeEmail};
+			let url="[[@{/employees/check_email_unique}]]";
+			let employeeEmail = $("#email").val();
+			let employeeId = $("#id").val();
+			let params = {"id": employeeId, "email": employeeEmail};
 			
 			$.post(url, params, function(response){
 				if(response === "Unique") {

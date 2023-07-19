@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 @Service
 public class PermissionServiceImpl implements PermissionService {
-
     private final ApiInfoRepository apiInfoRepository;
 
     public PermissionServiceImpl(ApiInfoRepository apiInfoRepository) {

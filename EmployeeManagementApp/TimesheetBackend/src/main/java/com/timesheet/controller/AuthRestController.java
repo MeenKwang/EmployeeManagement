@@ -12,6 +12,7 @@ import com.timesheet.service.AccountService;
 import com.timesheet.service.EmployeeService;
 import com.timesheet.service.RefreshTokenService;
 import com.timesheet.configuration.security.refreshtoken.RefreshTokenUtil;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -67,20 +68,24 @@ public class AuthRestController {
     }
 
     @PostMapping("refresh_token")
-    public ResponseEntity<?> getRefreshToken(@RequestBody @Validated RefreshTokenDto refreshTokenBody) {
-        System.out.println("Jump into refresh token api");
+    public ResponseEntity<?> getRefreshToken(@RequestBody @Validated RefreshTokenDto refreshTokenBody, HttpServletRequest request) {
         String requestRefreshToken = refreshTokenBody.getRefreshToken();
-        Account account = refreshTokenService.findByToken(requestRefreshToken);
-        if(account.getUsername() != jwtTokenUtil.getSubject(requestRefreshToken)) {
-            throw new RefreshTokenException(requestRefreshToken, "Refresh token is not valid!");
+        if(!refreshTokenUtil.validateRefreshToken(requestRefreshToken)) {
+            Account account = jwtTokenUtil.getAccount(requestRefreshToken);
+            Authentication authentication = authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(account.getUsername(), account.getPassword())
+            );
+            CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
+            String accessToken = jwtTokenUtil.generateAccessToken(userDetails);
+            AccountResponseDto accountResponseDto = new AccountResponseDto();
+            accountResponseDto.setEmail(account.getUsername());
+            accountResponseDto.setEmployeeId(employeeService.getEmployeeId(account.getUsername()));
+            accountResponseDto.setAccessToken(accessToken);
+            accountResponseDto.setRefreshToken(refreshTokenBody.getRefreshToken());
+            return ResponseEntity.ok(accountResponseDto);
+        } else {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
         }
-        if(account.getRefreshToken().getExpiredDate().compareTo(new Date()) < 0) {
-            throw new RefreshTokenException(requestRefreshToken, "Refresh token was expired. Please make a new sign in request");
-        }
-        if(account == null) {
-            throw new RefreshTokenException(requestRefreshToken, "Refresh token is not in database!");
-        }
-        String accessToken = jwtTokenUtil.generateAccessTokenUsingField(account);
-        return ResponseEntity.ok(null);
     }
+
 }

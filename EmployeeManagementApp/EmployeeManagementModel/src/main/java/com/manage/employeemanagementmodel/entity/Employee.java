@@ -33,7 +33,7 @@ public class Employee implements Serializable{
 	private LocalDate hiringDate;
 	@Column(name = "email", nullable = false, length = 255)
 	private String email;
-	@Column(name = "photo", length = 255, nullable = true)
+	@Column(name = "photo", length = 255)
 	private String photo;
 	@Column(name = "enabled")
 	private boolean enabled;
@@ -41,25 +41,25 @@ public class Employee implements Serializable{
 	@JoinColumn(name = "buddy_id")
 	private Employee buddy;
 	@OneToOne
-	@JoinColumn(name = "department_id")
+	@JoinColumn(name = "department_id", nullable = false)
 	private Department department;
 	//Remember to initialize the collection, if not, it can't be got (maybe hibernate can't manipulate an un-initialized collection.)
-	@OneToMany(mappedBy = "employee", cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(mappedBy = "employee", cascade = CascadeType.ALL)
 	@JsonIgnore
 	private List<Note> notes = new ArrayList<>();
 	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "account_id")
+	@JoinColumn(name = "account_id", nullable = false)
 	private Account account;
 	@ManyToOne
-	@JoinColumn(name = "job_department_id")
+	@JoinColumn(name = "job_department_id", nullable = false)
 	private JobDepartment jobDepartment;
-	@OneToMany(mappedBy = "employee", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "employee", cascade = CascadeType.REMOVE)
 	@JsonIgnore
 	private List<EmployeeBonus> employeeBonuses;
-	@OneToMany(mappedBy = "employee", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "employee", cascade = CascadeType.REMOVE)
 	@JsonIgnore
 	private List<CheckIn> checkIns = new ArrayList<>();
-	@OneToMany(mappedBy = "employee", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "employee", cascade = CascadeType.REMOVE)
 	@JsonIgnore
 	private List<Absence> absences = new ArrayList<>();
 	public Employee() {

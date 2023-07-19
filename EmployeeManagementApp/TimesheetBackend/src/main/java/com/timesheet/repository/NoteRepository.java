@@ -19,8 +19,8 @@ public interface NoteRepository extends JpaRepository<Note, Integer> {
     @Query("SELECT note FROM Note note WHERE note.employee.id = :id")
     List<Note> findAllByEmployeeId(@Param("id") Integer id);
     @Query("SELECT new com.timesheet.dto.NoteViewDto(note.id, note.task.project.name, note.task.name, note.note, note.workingTime, note.dateSubmit, note.status) " +
-            "FROM Note note WHERE WEEK(note.dateSubmit) = :weekNumber AND note.employee.account.username = :username ORDER BY note.dateSubmit ASC")
-    List<NoteViewDto> listNotesByWeekNumber(@Param("username") String username, @Param("weekNumber") int weekNumber);
+            "FROM Note note WHERE WEEK(note.dateSubmit) = :weekNumber AND note.employee.id = :employeeId ORDER BY note.dateSubmit ASC")
+    List<NoteViewDto> listNotesByWeekNumber(@Param("employeeId") Integer employeeId, @Param("weekNumber") int weekNumber);
     @Query("SELECT note FROM Note note WHERE MONTH(note.dateSubmit) = :month AND note.employee.id = :employeeId")
     List<Note> listNotesOfEmployeeByMonth(@Param("employeeId") Integer employeeId, @Param("month") int month);
     @Modifying

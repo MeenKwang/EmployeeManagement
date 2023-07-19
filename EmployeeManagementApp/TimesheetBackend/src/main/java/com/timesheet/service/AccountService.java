@@ -5,4 +5,6 @@ import com.timesheet.configuration.security.CustomUserDetails;
 
 public interface AccountService {
     Account save(Account account);
+
+    void logout();
 }

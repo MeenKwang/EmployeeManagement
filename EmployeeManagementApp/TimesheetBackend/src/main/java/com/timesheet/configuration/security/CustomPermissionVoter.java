@@ -24,6 +24,9 @@ public class CustomPermissionVoter implements AuthorizationManager<RequestAuthor
     @Override
     public AuthorizationDecision check(Supplier<Authentication> authentication, RequestAuthorizationContext object) {
         String[] permissions = permissionService.getApiPermission(object.getRequest().getRequestURL().toString());
+        for(String permission : permissions) {
+            System.out.println("Permission: " + permission);
+        }
         return new AuthoritiesAuthorizationManager().check(authentication, List.of(permissions));
     }
 }

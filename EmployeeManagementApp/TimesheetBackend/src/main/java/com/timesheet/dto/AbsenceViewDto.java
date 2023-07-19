@@ -3,6 +3,8 @@ package com.timesheet.dto;
 import com.manage.employeemanagementmodel.entity.enums.AbsenceStatus;
 import com.manage.employeemanagementmodel.entity.enums.TypeTimeOff;
 
+import java.time.LocalDate;
+
 public class AbsenceViewDto {
     private Integer id;
     private String absenceType;
@@ -10,18 +12,20 @@ public class AbsenceViewDto {
     private String absenceTypeOff;
     private Double timeOff;
     private String reason;
+    private LocalDate dateRequest;
     private AbsenceStatus status;
 
     public AbsenceViewDto() {
     }
 
-    public AbsenceViewDto(Integer id, String absenceType, TypeTimeOff typeTimeOff, String absenceTypeOff, Double timeOff, String reason, AbsenceStatus status) {
+    public AbsenceViewDto(Integer id, String absenceType, TypeTimeOff typeTimeOff, String absenceTypeOff, Double timeOff, String reason, LocalDate dateRequest, AbsenceStatus status) {
         this.id = id;
         this.absenceType = absenceType;
         this.typeTimeOff = typeTimeOff;
         this.absenceTypeOff = absenceTypeOff;
         this.timeOff = timeOff;
         this.reason = reason;
+        this.dateRequest = dateRequest;
         this.status = status;
     }
 
@@ -75,6 +79,14 @@ public class AbsenceViewDto {
 
     public AbsenceStatus getStatus() {
         return status;
+    }
+
+    public LocalDate getDateRequest() {
+        return dateRequest;
+    }
+
+    public void setDateRequest(LocalDate dateRequest) {
+        this.dateRequest = dateRequest;
     }
 
     public void setStatus(AbsenceStatus status) {

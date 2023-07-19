@@ -29,17 +29,20 @@ public class JobDetails implements Serializable {
 	private String jobDescription;
 	@Column(name = "template_name")
 	private String templateName;
+	@Column(name = "service")
+	private String service;
 
 	public JobDetails() {
 	}
 
-	public JobDetails(Integer id, String jobId, String jobName, String cronTime, String jobDescription, String templateName) {
+	public JobDetails(Integer id, String jobId, String jobName, String cronTime, String jobDescription, String templateName, String service) {
 		this.id = id;
 		this.jobId = jobId;
 		this.jobName = jobName;
 		this.cronTime = cronTime;
 		this.jobDescription = jobDescription;
 		this.templateName = templateName;
+		this.service = service;
 	}
 
 	public Integer getId() {
@@ -88,5 +91,13 @@ public class JobDetails implements Serializable {
 
 	public void setTemplateName(String templateName) {
 		this.templateName = templateName;
+	}
+
+	public String getService() {
+		return service;
+	}
+
+	public void setService(String service) {
+		this.service = service;
 	}
 }

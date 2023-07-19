@@ -1,17 +1,16 @@
-package com.manage.employee.configuration;
+package com.timesheet.configuration.cache;
 
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.EnableCaching;
-import org.springframework.cache.caffeine.CaffeineCacheManager;
 import org.springframework.cache.concurrent.ConcurrentMapCacheManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
 @EnableCaching
-public class CachingConfig {
+public class CacheConfig {
     @Bean
     public CacheManager cacheManager() {
-        return new CaffeineCacheManager("employeeManagementCache", "employeeCache");
+        return new ConcurrentMapCacheManager("employees", "timesheets", "absences");
     }
 }

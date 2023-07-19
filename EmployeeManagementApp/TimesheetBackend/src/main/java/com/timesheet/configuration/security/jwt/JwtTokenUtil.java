@@ -9,7 +9,11 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -106,5 +110,43 @@ public class JwtTokenUtil {
         String token = header.split(" ")[1].trim();
 
         return token;
+    }
+
+    public void setAuthenticationContext(String token, HttpServletRequest request) {
+        UserDetails userDetails = getUserDetails(token);
+
+        UsernamePasswordAuthenticationToken
+                authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+
+        authentication.setDetails(
+                new WebAuthenticationDetailsSource().buildDetails(request));
+
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+    }
+
+    public Account getAccount(String token) {
+        Account account = new Account();
+
+        Claims claims = parseClaims(token);
+        String claimRoles = (String) claims.get("roles");
+        claimRoles = claimRoles.replace("[", "").replace("]", "");
+        String[] roleNames = claimRoles.split(", ");
+        List<Role> roles = new ArrayList<>();
+        for(String roleName : roleNames) {
+            Role role = new Role();
+            role.setName(roleName);
+            roles.add(role);
+        }
+        account.setRoles(roles);
+        String subject = (String) claims.get(Claims.SUBJECT);
+        String username = subject;
+
+        account.setUsername(username);
+        return account;
+    }
+
+    public UserDetails getUserDetails(String token) {
+        Account account = getAccount(token);
+        return new CustomUserDetails(account);
     }
 }

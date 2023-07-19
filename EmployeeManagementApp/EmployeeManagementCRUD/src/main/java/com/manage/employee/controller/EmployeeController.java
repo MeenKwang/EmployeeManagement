@@ -2,8 +2,9 @@ package com.manage.employee.controller;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Objects;
 
-import org.springframework.cache.annotation.CacheEvict;
+import com.manage.employee.service.*;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,10 +23,6 @@ import com.manage.employeemanagementmodel.entity.Employee;
 import com.manage.employeemanagementmodel.entity.Note;
 import com.manage.employeemanagementmodel.entity.enums.Gender;
 import com.manage.employeemanagementmodel.exception.EmployeeNotFoundException;
-import com.manage.employee.service.DepartmentService;
-import com.manage.employee.service.EmailService;
-import com.manage.employee.service.EmployeeService;
-import com.manage.employee.service.NoteService;
 import com.manage.employee.ultilities.FileUploadUtil;
 
 import jakarta.mail.MessagingException;
@@ -39,14 +36,16 @@ public class EmployeeController {
 	private final EmployeeFormMapper employeeFormMapper;
 	private final NoteService noteService;
 	private final EmailService emailService;
+	private final JobDepartmentService jobDepartmentService;
 	
-	public EmployeeController(EmployeeService employeeService, DepartmentService departmentService, 
-			EmployeeFormMapper employeeFormMapper, NoteService noteService, EmailService emailService) {
+	public EmployeeController(EmployeeService employeeService, DepartmentService departmentService,
+							  EmployeeFormMapper employeeFormMapper, NoteService noteService, EmailService emailService, JobDepartmentService jobDepartmentService) {
 		this.employeeService = employeeService;
 		this.departmentService = departmentService;
 		this.employeeFormMapper = employeeFormMapper;
 		this.noteService = noteService;
 		this.emailService = emailService;
+		this.jobDepartmentService = jobDepartmentService;
 	}
 	
 	@GetMapping("")
@@ -91,6 +90,7 @@ public class EmployeeController {
 		model.addAttribute("genders", Gender.values());
 		model.addAttribute("listDepartments", departmentService.findAll());
 		model.addAttribute("listBuddy", employeeService.findAll());
+		model.addAttribute("listJobDepartments", jobDepartmentService.findAll());
 		return "employees/employees_form";
 	}
 	
@@ -102,6 +102,7 @@ public class EmployeeController {
 			model.addAttribute("genders", Gender.values());
 			model.addAttribute("listDepartments", departmentService.findAll());
 			model.addAttribute("listBuddy", employeeService.findByIdNot(employee.getId()));
+			model.addAttribute("listJobDepartments", jobDepartmentService.findAll());
 			model.addAttribute("pageTitle", "Update Employee (ID: " + id + ")");
 			return "employees/employees_form";
 		} catch (EmployeeNotFoundException e) {
@@ -123,7 +124,7 @@ public class EmployeeController {
 		}
 
 		if(!photoFile.isEmpty()) {
-			String fileName = StringUtils.cleanPath(photoFile.getOriginalFilename());
+			String fileName = StringUtils.cleanPath(Objects.requireNonNull(photoFile.getOriginalFilename()));
 			employee.setPhoto(fileName);
 			//They are reference to the same object, the object after saving only merged with id. WTF ?
 			Employee savedEmployee = employeeService.save(employee);

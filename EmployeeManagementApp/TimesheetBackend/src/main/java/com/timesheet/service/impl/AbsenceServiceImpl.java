@@ -14,7 +14,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -31,8 +33,10 @@ public class AbsenceServiceImpl implements AbsenceService {
     }
 
     @Override
-    public List<AbsenceDto> listAllAbsenceRequestInMonthAndYearWithAbsenceType(Integer month, Integer year, Integer absenceTypeId) {
-        return absenceRepository.listAllAbsenceRequestInMonthAndYearWithAbsenceType(month, year, absenceTypeId);
+    public Map<AbsenceStatus, List<AbsenceDto>> listAllAbsenceRequestInMonthAndYearWithAbsenceType(Integer month, Integer year, Integer absenceTypeId) {
+        List<AbsenceDto> absenceDtoList = absenceRepository.listAllAbsenceRequestInMonthAndYearWithAbsenceType(month, year, absenceTypeId);
+        Map<AbsenceStatus, List<AbsenceDto>> absenceDtoMap = absenceDtoList.stream().collect(Collectors.groupingBy(AbsenceDto::getStatus, Collectors.toList()));
+        return absenceDtoMap;
     }
 
     @Override
@@ -88,31 +92,17 @@ public class AbsenceServiceImpl implements AbsenceService {
 
     @Override
     public void updateAbsenceStatus(Integer absenceId, AbsenceStatus status) {
-        try {
-            absenceRepository.updateAbsenceStatus(absenceId, status);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        absenceRepository.updateAbsenceStatus(absenceId, status);
     }
 
     @Override
     public List<AbsenceDto> listAllAbsenceRequestInMonthAndYearOfEmployee(Integer month, Integer year, Integer employeeId) {
-        try {
-            return absenceRepository.listAllAbsenceRequestInMonthAndYearOfEmployee(month, year, employeeId);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
+        return absenceRepository.listAllAbsenceRequestInMonthAndYearOfEmployee(month, year, employeeId);
     }
 
     @Override
     public List<LocalDate> ListAllDayAbsenceInParticularMonthAndYearOfEmployee(Integer month, Integer year, Integer employeeId) {
-        try {
-            return absenceRepository.ListAllDayAbsenceInParticularMonthAndYearOfEmployee(month, year, employeeId);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
+        return absenceRepository.ListAllDayAbsenceInParticularMonthAndYearOfEmployee(month, year, employeeId);
     }
 
     @Override
@@ -126,8 +116,10 @@ public class AbsenceServiceImpl implements AbsenceService {
     }
 
     @Override
-    public List<AbsenceViewDto> listAllPendingAbsenceOfStaffInParticularMonthAndYear(int staffId, int month, int year) {
-        return absenceRepository.listAllPendingAbsenceOfStaffInParticularMonth(staffId, month, year);
+    public Map<AbsenceStatus, List<AbsenceViewDto>> listAllAbsenceOfStaffInParticularMonthAndYear(int staffId, int month, int year) {
+        List<AbsenceViewDto> absenceDtoList = absenceRepository.listAllAbsenceOfStaffInParticularMonth(staffId, month, year);
+        Map<AbsenceStatus, List<AbsenceViewDto>> absenceDtoMap = absenceDtoList.stream().collect(Collectors.groupingBy(AbsenceViewDto::getStatus, Collectors.toList()));
+        return absenceDtoMap;
     }
 
     @Override

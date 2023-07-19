@@ -33,7 +33,6 @@ public class JwtTokenFilter extends OncePerRequestFilter {
 
     private final AccountRepository accountRepository;
     private final JwtTokenUtil jwtTokenUtil;
-//    private final PermissionService permissionService;
 
     public JwtTokenFilter(AccountRepository accountRepository, JwtTokenUtil jwtTokenUtil) {
         this.accountRepository = accountRepository;
@@ -43,7 +42,6 @@ public class JwtTokenFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         if(!hasAuthorizationHeader(request)) {
-            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             filterChain.doFilter(request,response);
             return;
         }
@@ -51,38 +49,15 @@ public class JwtTokenFilter extends OncePerRequestFilter {
         String accessToken = getAccessToken(request);
 
         if(!jwtTokenUtil.validateAccessToken(accessToken)) {
-            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             filterChain.doFilter(request, response);
             return;
         }
 
-        setAuthenticationContext(accessToken, request);
+        jwtTokenUtil.setAuthenticationContext(accessToken, request);
 
-//        if(!isAuthorized(request)) {
-//            System.out.println("Not authorized!");
-//            response.sendError(HttpServletResponse.SC_FORBIDDEN);
-//            return;
-//        }
         filterChain.doFilter(request, response);
 
     }
-
-//    private boolean isAuthorized(HttpServletRequest request) {
-//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-//
-//        if(authentication != null && authentication.getPrincipal() instanceof UserDetails) {
-//            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-//            String[] permissions = permissionService.getApiPermission(request.getRequestURL().toString());
-//            if(permissions == null) return false;
-//            List<String> permissionsList = Arrays.asList(permissions);
-//            for(GrantedAuthority authority : userDetails.getAuthorities()) {
-//                if(permissionsList.contains(authority.getAuthority())) {
-//                    return true;
-//                }
-//            }
-//        }
-//        return false;
-//    }
 
     private boolean hasAuthorizationHeader(HttpServletRequest request) {
         String header = request.getHeader("Authorization");
@@ -100,37 +75,4 @@ public class JwtTokenFilter extends OncePerRequestFilter {
         return token;
     }
 
-    private void setAuthenticationContext(String token, HttpServletRequest request) {
-        UserDetails userDetails = getUserDetails(token);
-
-        UsernamePasswordAuthenticationToken
-                authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
-
-        authentication.setDetails(
-                new WebAuthenticationDetailsSource().buildDetails(request));
-
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-    }
-
-    private UserDetails getUserDetails(String token) {
-        Account account = new Account();
-
-        Claims claims = jwtTokenUtil.parseClaims(token);
-        String claimRoles = (String) claims.get("roles");
-        claimRoles = claimRoles.replace("[", "").replace("]", "");
-        String[] roleNames = claimRoles.split(", ");
-        List<Role> roles = new ArrayList<>();
-        for(String roleName : roleNames) {
-            Role role = new Role();
-            role.setName(roleName);
-            roles.add(role);
-        }
-        account.setRoles(roles);
-        String subject = (String) claims.get(Claims.SUBJECT);
-        String username = subject;
-
-        account.setUsername(username);
-
-        return new CustomUserDetails(account);
-    }
 }

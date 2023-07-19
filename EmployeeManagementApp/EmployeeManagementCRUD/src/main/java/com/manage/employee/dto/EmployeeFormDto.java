@@ -26,11 +26,12 @@ public class EmployeeFormDto implements Serializable{
 	private Integer buddyId;
 	private Integer departmentId;
 	private Integer accountId;
+	private Integer jobDepartmentId;
 
 	public EmployeeFormDto() {
 	}
 
-	public EmployeeFormDto(Integer id, String email, String firstName, String lastName, Gender gender, LocalDate birthDate, LocalDate hiringDate, boolean enabled, String photo, Integer buddyId, Integer departmentId, Integer accountId) {
+	public EmployeeFormDto(Integer id, String email, String firstName, String lastName, Gender gender, LocalDate birthDate, LocalDate hiringDate, boolean enabled, String photo, Integer buddyId, Integer departmentId, Integer accountId, Integer jobDepartmentId) {
 		this.id = id;
 		this.email = email;
 		this.firstName = firstName;
@@ -43,6 +44,7 @@ public class EmployeeFormDto implements Serializable{
 		this.buddyId = buddyId;
 		this.departmentId = departmentId;
 		this.accountId = accountId;
+		this.jobDepartmentId = jobDepartmentId;
 	}
 
 	public Integer getId() {
@@ -139,6 +141,14 @@ public class EmployeeFormDto implements Serializable{
 
 	public void setAccountId(Integer accountId) {
 		this.accountId = accountId;
+	}
+
+	public Integer getJobDepartmentId() {
+		return jobDepartmentId;
+	}
+
+	public void setJobDepartmentId(Integer jobDepartmentId) {
+		this.jobDepartmentId = jobDepartmentId;
 	}
 
 	public String photosImagePath() {

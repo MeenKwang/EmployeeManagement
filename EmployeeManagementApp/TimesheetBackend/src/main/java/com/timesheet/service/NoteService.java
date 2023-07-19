@@ -15,13 +15,13 @@ import java.util.List;
 import java.util.Map;
 
 public interface NoteService {
-    List<NotesPerDayDto> listTimesheetPerWeekNumber(String username, Integer weekNumber);
+    List<NotesPerDayDto> listTimesheetPerWeekNumber(Integer employeeId, Integer weekNumber);
     Note saveNote(NoteFormDto noteFormDto);
     boolean deleteNote(Integer noteId) throws NoteNotFoundException;
     boolean updateNewNotesStatusToPendingStatus(Integer currentWeekNumber);
     NoteFormDto getNoteFormById(Integer noteId);
     List<NoteSummaryDto> getTotalTimesheetHoursForEachDayInSpecificMonthAndYear(NoteSummaryRequestDto noteSummaryRequestDto);
     Long getOpenTalkCount(CheckInRequestDto request);
-    List<NoteViewDto> listAllPendingTimesheetOfStaffInParticularMonthAndYear(int staffId, int month, int year);
+    Map<TimeSheetStatus, List<NoteViewDto>> listAllPendingTimesheetOfStaffInParticularMonthAndYear(int staffId, int month, int year);
     void updatePendingTimesheetStatus(int timesheetId, TimeSheetStatus status);
 }

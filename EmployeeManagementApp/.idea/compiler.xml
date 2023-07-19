@@ -7,6 +7,7 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="Job" />
         <module name="EmployeeManagementModel" />
       </profile>
       <profile name="Annotation profile for TimesheetBackend" enabled="true">
@@ -26,6 +27,7 @@
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="EmployeeManagementCRUD" options="-parameters" />
       <module name="EmployeeManagementModel" options="-parameters" />
+      <module name="Job" options="-parameters" />
       <module name="TimesheetBackend" options="-parameters" />
     </option>
   </component>

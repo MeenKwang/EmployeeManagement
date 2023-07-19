@@ -1,11 +1,15 @@
 package com.manage.employee.service.impl;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
+import org.springframework.cache.Cache;
+import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.caffeine.CaffeineCacheManager;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -30,7 +34,6 @@ public class EmployeeServiceImpl implements EmployeeService{
 	public EmployeeServiceImpl(EmployeeRepository employeeRepository, EmployeeFormMapper employeeFormMapper) {
 		this.employeeRepository = employeeRepository;
 		this.employeeFormMapper = employeeFormMapper;
-		
 	}
 	
 	@Override
@@ -47,14 +50,12 @@ public class EmployeeServiceImpl implements EmployeeService{
 	}
 
 	@Override
-	@CachePut(value = "employeeCache", key = "#employee.id")
 	public Employee save(Employee employee) {
 		Employee savedEmployee = employeeRepository.save(employee);
 		return savedEmployee;
 	}
 
 	@Override
-	@CacheEvict(value = "employeeCache", key = "#employeeId")
 	public void detete(Integer employeeId) throws EmployeeNotFoundException {
 		Employee employee = employeeRepository.findById(employeeId).get();
 		if(employee == null) {
@@ -122,17 +123,9 @@ public class EmployeeServiceImpl implements EmployeeService{
 	}
 
 	@Override
-	@Cacheable("employeeCache")
 	public Employee getEmployeeById(Integer id) {
 		// TODO Auto-generated method stub
 		return employeeRepository.findById(id).get();
 	}
 
-	@CacheEvict("employeeCache")
-	public void clearCacheById(int id) {
-	}
-
-	@CacheEvict(value = "employeeCache", allEntries = true)
-	public void clearCache() {
-	}
 }

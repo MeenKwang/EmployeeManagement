@@ -19,6 +19,7 @@ public interface EmployeeFormMapper {
 	@Mapping(source = "buddyId", target = "buddy.id")
 	@Mapping(source = "departmentId", target = "department.id")
 	@Mapping(source = "accountId", target = "account.id")
+	@Mapping(source = "jobDepartmentId", target = "jobDepartment.id")
 	@Mapping(source = "photo", target = "photo")
 	Employee employeeFormDtoToEmployee(EmployeeFormDto employeeFormDto);
 	
@@ -33,6 +34,7 @@ public interface EmployeeFormMapper {
 	@Mapping(source = "buddy.id", target = "buddyId")
 	@Mapping(source = "department.id", target = "departmentId")
 	@Mapping(source = "account.id", target = "accountId")
+	@Mapping(source = "jobDepartment.id", target = "jobDepartmentId")
 	@Mapping(source = "photo", target = "photo")
 	EmployeeFormDto employeeToEmployeeFormDto(Employee employee);
 }

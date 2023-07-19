@@ -40,9 +40,10 @@ public class NoteRestController {
     }
 //    @PreAuthorize("hasAnyAuthority(@permissionService.getApiPermission(#request.getRequestURL().toString()))")
     @GetMapping("notes_by_week")
-    public ResponseEntity<List<NotesPerDayDto>> getNotesListByWeekNumber(@RequestParam("username") String username,
+    public ResponseEntity<List<NotesPerDayDto>> getNotesListByWeekNumber(@RequestParam("employeeId") Integer employeeId,
                                                                @RequestParam("weekNumber") Integer weekNumber) {
-        List<NotesPerDayDto> lst = noteService.listTimesheetPerWeekNumber(username, weekNumber);
+        System.out.println(weekNumber);
+        List<NotesPerDayDto> lst = noteService.listTimesheetPerWeekNumber(employeeId, weekNumber);
 
         return ResponseEntity.ok().body(lst);
     }

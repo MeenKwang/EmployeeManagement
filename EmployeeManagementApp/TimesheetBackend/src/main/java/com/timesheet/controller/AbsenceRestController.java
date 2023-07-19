@@ -36,12 +36,7 @@ public class AbsenceRestController {
     public ResponseEntity<?> getAbsenceStatus(@RequestParam("month") Integer monthNumber,
                                               @RequestParam("year") Integer yearNumber,
                                               @RequestParam("employeeId") Integer employeeId) {
-        try {
-            return ResponseEntity.ok(absenceService.listAllAbsenceRequestInMonthAndYearOfEmployee(monthNumber, yearNumber, employeeId));
-        } catch (Exception e) {
-            e.printStackTrace();
-            return ResponseEntity.ok(null);
-        }
+        return ResponseEntity.ok(absenceService.listAllAbsenceRequestInMonthAndYearOfEmployee(monthNumber, yearNumber, employeeId));
     }
 
     @PostMapping("save")
@@ -59,36 +54,19 @@ public class AbsenceRestController {
     public ResponseEntity<?> getDayAbsenceList(@RequestParam("month") Integer month,
                                                @RequestParam("year") Integer year,
                                                @RequestParam("employeeId") Integer employeeId) {
-        try {
-            return ResponseEntity.ok(absenceService.ListAllDayAbsenceInParticularMonthAndYearOfEmployee(month, year, employeeId));
-        } catch (Exception e) {
-            e.printStackTrace();
-            return ResponseEntity.ok(null);
-        }
+        return ResponseEntity.ok(absenceService.ListAllDayAbsenceInParticularMonthAndYearOfEmployee(month, year, employeeId));
     }
 
     @GetMapping("get_absences_per_day")
     public ResponseEntity<?> getAbsencesPerDay(@RequestParam("date") @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSX") Date date,
                                                @RequestParam("employeeId") Integer employeeId) {
-        System.out.println(date);
         LocalDate localDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-        System.out.println(localDate);
-        try {
-            return ResponseEntity.ok(absenceService.getAbsenceByDateAndEmployee(localDate, employeeId));
-        } catch (Exception e) {
-            e.printStackTrace();
-            return ResponseEntity.ok(null);
-        }
+        return ResponseEntity.ok(absenceService.getAbsenceByDateAndEmployee(localDate, employeeId));
     }
 
     @GetMapping("find_by_id")
     public ResponseEntity<?> findById(@RequestParam("id") Integer id) {
-        try {
-            return ResponseEntity.ok(absenceService.findFormById(id));
-        } catch (Exception e) {
-            e.printStackTrace();
-            return ResponseEntity.ok(null);
-        }
+        return ResponseEntity.ok(absenceService.findFormById(id));
     }
     @DeleteMapping("delete_by_id")
     public ResponseEntity<Boolean> deleteById(@RequestParam("id") Integer id) {
@@ -104,21 +82,12 @@ public class AbsenceRestController {
     public ResponseEntity<?> getStaffAbsenceByMonthAndYear(@RequestParam("staffId") Integer staffId,
                                                              @RequestParam("month") Integer month,
                                                              @RequestParam("year") Integer year) {
-        try {
-            return ResponseEntity.ok().body(absenceService.listAllAbsenceRequestInMonthAndYearWithAbsenceType(staffId, month, year));
-        } catch (Exception e) {
-            e.printStackTrace();
-            return ResponseEntity.ok(null);
-        }
+        return ResponseEntity.ok().body(absenceService.listAllAbsenceOfStaffInParticularMonthAndYear(staffId, month, year));
     }
 
     @PutMapping("update_staff_absence_status")
-    public ResponseEntity<?> updateAbsenceStatus(@RequestParam("noteId") Integer noteId, @RequestParam("status") AbsenceStatus status) {
-        try {
-            absenceService.updateAbsenceStatus(noteId, status);
-        } catch (Exception e) {
-            return ResponseEntity.ok(false);
-        }
+    public ResponseEntity<?> updateAbsenceStatus(@RequestParam("absenceId") Integer noteId, @RequestParam("status") AbsenceStatus status) {
+        absenceService.updateAbsenceStatus(noteId, status);
         return ResponseEntity.ok(true);
     }
 

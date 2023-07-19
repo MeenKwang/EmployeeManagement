@@ -2,7 +2,6 @@ package com.timesheet.dto;
 
 public class RefreshTokenDto {
     private String refreshToken;
-    private String accessToken;
 
     public String getRefreshToken() {
         return refreshToken;
@@ -12,11 +11,4 @@ public class RefreshTokenDto {
         this.refreshToken = refreshToken;
     }
 
-    public String getAccessToken() {
-        return accessToken;
-    }
-
-    public void setAccessToken(String accessToken) {
-        this.accessToken = accessToken;
-    }
 }

@@ -1,5 +1,6 @@
 package com.timesheet.dto;
 
+import com.manage.employeemanagementmodel.entity.enums.AbsenceStatus;
 import com.manage.employeemanagementmodel.entity.enums.TypeTimeOff;
 
 import java.time.LocalDate;
@@ -14,11 +15,12 @@ public class AbsenceDto {
     private LocalDate dateSubmit;
     private TypeTimeOff typeTimeOff;
     private Double timeOff;
+    private AbsenceStatus status;
 
     public AbsenceDto() {
     }
 
-    public AbsenceDto(Integer id, String reason, Integer employeeId, Integer absenceTypeId, Integer absenceTypeOffId, LocalDate dateRequest, LocalDate dateSubmit, TypeTimeOff typeTimeOff, Double timeOff) {
+    public AbsenceDto(Integer id, String reason, Integer employeeId, Integer absenceTypeId, Integer absenceTypeOffId, LocalDate dateRequest, LocalDate dateSubmit, TypeTimeOff typeTimeOff, Double timeOff, AbsenceStatus status) {
         this.id = id;
         this.reason = reason;
         this.employeeId = employeeId;
@@ -28,6 +30,7 @@ public class AbsenceDto {
         this.dateSubmit = dateSubmit;
         this.typeTimeOff = typeTimeOff;
         this.timeOff = timeOff;
+        this.status = status;
     }
 
     public Integer getId() {
@@ -100,5 +103,13 @@ public class AbsenceDto {
 
     public void setAbsenceTypeId(Integer absenceTypeId) {
         this.absenceTypeId = absenceTypeId;
+    }
+
+    public AbsenceStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(AbsenceStatus status) {
+        this.status = status;
     }
 }

@@ -12,20 +12,19 @@ import com.timesheet.dto.request_body.CheckInRequestDto;
 import com.timesheet.dto.request_body.NoteSummaryRequestDto;
 import com.timesheet.repository.NoteRepository;
 import com.timesheet.service.NoteService;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
 @Transactional
 public class NoteServiceImpl implements NoteService {
-
     private final NoteRepository noteRepository;
     private final NoteFormDtoMapper noteFormDtoMapper;
 
@@ -34,8 +33,9 @@ public class NoteServiceImpl implements NoteService {
         this.noteFormDtoMapper = noteFormDtoMapper;
     }
     @Override
-    public List<NotesPerDayDto> listTimesheetPerWeekNumber(String username, Integer weekNumber) {
-        List<NoteViewDto> noteViewDtos = noteRepository.listNotesByWeekNumber(username, weekNumber);
+    @Cacheable(value = "timesheets", key = "#employeeId")
+    public List<NotesPerDayDto> listTimesheetPerWeekNumber(Integer employeeId, Integer weekNumber) {
+        List<NoteViewDto> noteViewDtos = noteRepository.listNotesByWeekNumber(employeeId, weekNumber);
         Map<LocalDate, List<NoteViewDto>> notesPerDate = noteViewDtos.stream().collect(Collectors.groupingBy(NoteViewDto::getDateSubmit));
         List<NotesPerDayDto> notesPerDayDtoList = new ArrayList<>();
         for(Map.Entry<LocalDate, List<NoteViewDto>> entry : notesPerDate.entrySet()) {
@@ -79,6 +79,7 @@ public class NoteServiceImpl implements NoteService {
     }
 
     @Override
+    @CachePut(value = "timesheets", key = "#{noteId}")
     public NoteFormDto getNoteFormById(Integer noteId) {
         return noteRepository.getNoteFormById(noteId);
     }
@@ -94,8 +95,10 @@ public class NoteServiceImpl implements NoteService {
     }
 
     @Override
-    public List<NoteViewDto> listAllPendingTimesheetOfStaffInParticularMonthAndYear(int staffId, int month, int year) {
-        return noteRepository.listAllPendingTimesheetOfStaffInParticularMonth(staffId, month, year);
+    public Map<TimeSheetStatus, List<NoteViewDto>> listAllPendingTimesheetOfStaffInParticularMonthAndYear(int staffId, int month, int year) {
+        List<NoteViewDto> noteViewDtoList = noteRepository.listAllPendingTimesheetOfStaffInParticularMonth(staffId, month, year);
+        Map<TimeSheetStatus, List<NoteViewDto>> map = noteViewDtoList.stream().collect(Collectors.groupingBy(NoteViewDto::getStatus, Collectors.toList()));
+        return map;
     }
 
     @Override

@@ -23,7 +23,7 @@ public class ProfileRestController {
 
     @GetMapping("")
 //    @PreAuthorize("hasAnyAuthority(@permissionService.getApiPermission(#request.getRequestURL().toString()))")
-    public ResponseEntity<?> getMyProfile(@RequestParam(value = "username") String accountUsername, HttpServletRequest request) {
-        return ResponseEntity.ok(employeeService.getEmployeeInfo(accountUsername));
+    public ResponseEntity<?> getMyProfile(@RequestParam(value = "id") Integer id, HttpServletRequest request) {
+        return ResponseEntity.ok(employeeService.getEmployeeInfo(id));
     }
 }

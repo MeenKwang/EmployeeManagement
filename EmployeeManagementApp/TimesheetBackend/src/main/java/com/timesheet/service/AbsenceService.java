@@ -10,9 +10,10 @@ import com.timesheet.dto.NoteViewDto;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 
 public interface AbsenceService {
-    List<AbsenceDto> listAllAbsenceRequestInMonthAndYearWithAbsenceType(Integer month, Integer year, Integer absenceTypeId);
+    Map<AbsenceStatus, List<AbsenceDto>> listAllAbsenceRequestInMonthAndYearWithAbsenceType(Integer month, Integer year, Integer absenceTypeId);
     Absence saveAbsenceRequest(AbsenceDto absenceDto);
     boolean deletePendingAbsenceRequest(Integer absenceRequest) throws AbsenceRequestNotFoundException;
     AbsenceDto getAbsenceByDate(LocalDate date);
@@ -21,6 +22,6 @@ public interface AbsenceService {
     List<LocalDate> ListAllDayAbsenceInParticularMonthAndYearOfEmployee(Integer month, Integer year, Integer employeeId);
     List<AbsenceViewDto> getAbsenceByDateAndEmployee(LocalDate date, Integer employeeId);
     AbsenceDto findFormById(Integer id);
-    List<AbsenceViewDto> listAllPendingAbsenceOfStaffInParticularMonthAndYear(int staffId, int month, int year);
+    Map<AbsenceStatus, List<AbsenceViewDto>> listAllAbsenceOfStaffInParticularMonthAndYear(int staffId, int month, int year);
     void updatePendingAbsenceStatus(int absenceId, AbsenceStatus status);
 }
